@@ -5,6 +5,7 @@ import { LargeText, MediumText, SmallText, SmallDetailText } from '../styles/typ
 const PluginPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'yet' | 'doing' | 'done' | 'mentioned'>('yet');
   const [dropdownOpen, setDropdownOpen] = useState<{ [key: number]: boolean }>({});
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const totalArchiveCount = 20; 
   const currentArchiveCount = 0; 
@@ -13,6 +14,11 @@ const PluginPage: React.FC = () => {
     setDropdownOpen((prev) => ({ ...prev, [index]: !prev[index] }));
   };
   
+  const handleToggleSize = () => {
+    const nextExpandedState = !isExpanded;
+    setIsExpanded(nextExpandedState);
+    parent.postMessage({ pluginMessage: { type: 'toggleSize', isExpanded: nextExpandedState } }, '*');
+  };
 
   const tasks = {
     yet: [
@@ -49,6 +55,8 @@ const PluginPage: React.FC = () => {
         <Title_SHOOT>SHOOT COMMENT</Title_SHOOT>
         <IconContainer>
           <div
+          onClick={handleToggleSize} 
+          style={{ cursor: 'pointer' }}
             dangerouslySetInnerHTML={{
               __html: `
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -98,7 +106,7 @@ const PluginPage: React.FC = () => {
         ))}
       </TabContainer>
 
-      <ShootSection>
+      <ShootSection isExpanded={isExpanded}>
         <TaskList>
           {tasks[activeTab].map((task, index) => (
             <TaskItem key={index}>
@@ -169,6 +177,8 @@ const PluginPage: React.FC = () => {
         </TaskList>
       </ShootSection>
 
+      {isExpanded && ( // 최소화 영역 조건 
+      <>
       <TitleArchiveContainer>
         <Title_ARCHIVE>ARCHIVE</Title_ARCHIVE>
         <CountContainer>
@@ -182,32 +192,34 @@ const PluginPage: React.FC = () => {
         <ArchiveContent>
           <CreateButton>+ Create</CreateButton>
           {archiveItems.map((item, index) => (
-    <ArchiveItem key={index}>
-        <ArchiveText>
-            {item.text}
-            <CircleIcon />
-            <ArchiveCountText>{item.count}</ArchiveCountText>
-        </ArchiveText>
-        <DotsIcon>
-            <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
+            <ArchiveItem key={index}>
+              <ArchiveText>
+                {item.text}
+                <CircleIcon />
+                <ArchiveCountText>{item.count}</ArchiveCountText>
+                </ArchiveText>
+                <DotsIcon>
+                  <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  >
                 <path d="M6 12C6 12.5304 5.78929 13.0391 5.41421 13.4142C5.03914 13.7893 4.53043 14 4 14C3.46957 14 2.96086 13.7893 2.58579 13.4142C2.21071 13.0391 2 12.5304 2 12C2 11.4696 2.21071 10.9609 2.58579 10.5858C2.96086 10.2107 3.46957 10 4 10C4.53043 10 5.03914 10.2107 5.41421 10.5858C5.78929 10.9609 6 11.4696 6 12Z" />
                 <path d="M21.4142 13.4142C21.7893 13.0391 22 12.5304 22 12C22 11.4696 21.7893 10.9609 21.4142 10.5858C21.0391 10.2107 20.5304 10 20 10C19.4696 10 18.9609 10.2107 18.5858 10.5858C18.2107 10.9609 18 11.4696 18 12C18 12.5304 18.2107 13.0391 18.5858 13.4142C18.9609 13.7893 19.4696 14 20 14C20.5304 14 21.0391 13.7893 21.4142 13.4142Z" />
                 <path d="M13.4142 13.4142C13.7893 13.0391 14 12.5304 14 12C14 11.4696 13.7893 10.9609 13.4142 10.5858C13.0391 10.2107 12.5304 10 12 10C11.4696 10 10.9609 10.2107 10.5858 10.5858C10.2107 10.9609 10 11.4696 10 12C10 12.5304 10.2107 13.0391 10.5858 13.4142C10.9609 13.7893 11.4696 14 12 14C12.5304 14 13.0391 13.7893 13.4142 13.4142Z" />
             </svg>
-        </DotsIcon>
-    </ArchiveItem>
-          ))}
+             </DotsIcon>
+         </ArchiveItem>
+        ))}
         </ArchiveContent>
-      </ArchiveSection>
-    </PluginWrapper>
-  );
-};
+        </ArchiveSection>
+        </>
+      )}
+      </PluginWrapper>
+      );
+    };
 
 const icons = {
   yet: {
@@ -337,33 +349,33 @@ const Tab = styled.button<{ active: boolean }>`
   transition: background-color 0.3s ease;
 `;
 
-const ShootSection = styled.section`
-    background-color: ${({ theme }) => theme.colors.grey80};
-    padding: 15px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
-    width: 520px;
-    max-height: 230px; 
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors.grey70} transparent;
-    margin-top: -5px; 
-    border-radius: 4px;
-    margin-bottom: 50px;
+const ShootSection = styled.section<{ isExpanded: boolean }>`
+  background-color: ${({ theme }) => theme.colors.grey80};
+  padding: 15px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 520px;
+  max-height: 230px;
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }) => theme.colors.grey70} transparent;
+  margin-top: -5px;
+  border-radius: 4px;
+  margin-bottom: ${({ isExpanded }) => (isExpanded ? '50px' : '0')}; 
 
-    &::-webkit-scrollbar {
-        width: 6px;
-    }
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background-color: ${({ theme }) => theme.colors.grey60};
-        border-radius: 10px;
-    }
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => theme.colors.grey60};
+    border-radius: 10px;
+  }
 
-    &::-webkit-scrollbar-track {
-        background-color: transparent;
-    }
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
 `;
 
 const TaskList = styled.div`
