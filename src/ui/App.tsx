@@ -1,7 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
+import LoginPage from './pages/LoginPage'; 
+import PluginPage from './pages/PluginPage'; 
 
 function App() {
-  return <h1></h1>;
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  const handleLogin = () => {
+    setIsLoggedIn(true); 
+  };
+
+  return (
+    <>
+      {isLoggedIn ? (
+        <PluginPage /> 
+      ) : (
+        <LoginPage onLogin={handleLogin} /> 
+      )}
+    </>
+  );
 }
 
 export default App;

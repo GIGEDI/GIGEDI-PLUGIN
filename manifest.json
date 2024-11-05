@@ -4,5 +4,6 @@
   "api": "1.0.0",
   "main": "dist/plugin.js",
   "editorType": ["figma", "figjam"],
-  "ui": "dist/ui.html"
+  "ui": "dist/ui.html",
+  "permissions": ["currentuser"]
 }
