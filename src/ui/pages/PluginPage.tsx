@@ -10,8 +10,9 @@ const PluginPage: React.FC = () => {
   const [dropdownOpen, setDropdownOpen] = useState<{ [key: number]: boolean }>({});
   const [isExpanded, setIsExpanded] = useState(true);
   const [isInfoModalOpen, setInfoModalOpen] = useState(false);
+
   const totalArchiveCount = 20;
-  const currentArchiveCount = 0;
+  const [currentArchiveCount, setCurrentArchiveCount] = useState(0);
 
   const toggleDropdown = (index: number) => {
     setDropdownOpen((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -104,7 +105,7 @@ const PluginPage: React.FC = () => {
               <TotalCountText>{totalArchiveCount}</TotalCountText>
             </CountContainer>
           </TitleArchiveContainer>
-          <ArchiveSection />
+          <ArchiveSection setArchiveCount={setCurrentArchiveCount} />
         </>
       )}
 

@@ -27,7 +27,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
 const Overlay = styled.div`
   position: fixed;
   top: 86px;
-  left: 75px;
+  left: 60px;
   display: flex;
   align-items: center;
   justify-content: center;

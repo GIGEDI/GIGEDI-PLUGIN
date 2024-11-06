@@ -1,8 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import { SmallText, MediumText } from '../styles/typo';
 
-const ArchiveSection: React.FC = () => {
+interface ArchiveSectionProps {
+  setArchiveCount: (count: number) => void; 
+}
+
+const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
   const archiveItems = [
     { text: '메인페이지 플로우', count: 3 },
     { text: '디자인시스템 시안1', count: 12 },
@@ -10,7 +14,12 @@ const ArchiveSection: React.FC = () => {
     { text: '메인페이지 플로우', count: 3 },
     { text: '컬러시스템(확정)', count: 7 },
     { text: '컬러시스템(확정)', count: 7 },
+    { text: '컬러시스템(확정)', count: 7 },
   ];
+
+  useEffect(() => {
+    setArchiveCount(archiveItems.length);
+  }, [archiveItems.length, setArchiveCount]);
 
   return (
     <ArchiveWrapper>
