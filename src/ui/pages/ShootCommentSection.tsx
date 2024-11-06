@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components';
 import { SmallText, SmallDetailText } from '../styles/typo';
 
@@ -17,7 +17,7 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
   toggleDropdown,
   isExpanded,
 }) => {
-  const tasks = {
+  const [tasks, setTasks] = useState({
     yet: [
      /* { name: 'CRYSTAL', text: '와이어프레임 확인해 주세요.', page: '메인페이지 플로우 | ', time: 'Just now' },
       { name: 'TAEK', text: '@지선 @SUJIN.K 백엔드분들 이해 안 가나요?', page: '메인페이지 플로우 | ', time: '1 day ago' },
@@ -36,6 +36,25 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
       { name: 'GAUN', text: '@SUJIN.K 최신 디자인 시스템 확인 부탁드립니다.', page: '메인페이지 플로우 | ', time: '4 hours ago' },
       { name: 'TAEK', text: '@JIN 변경 사항 공유합니다.', page: '메인페이지 플로우 | ', time: '1 day ago' },
     ],
+  });
+
+  const moveTaskToTab = (taskIndex, currentTab, targetTab) => {
+    if (currentTab === targetTab) return; 
+
+    setTasks((prevTasks) => {
+      const taskToMove = prevTasks[currentTab][taskIndex];
+      const updatedCurrentTabTasks = prevTasks[currentTab].filter((_, index) => index !== taskIndex);
+
+      if (prevTasks[targetTab].some((task) => task.name === taskToMove.name && task.text === taskToMove.text)) {
+        return prevTasks;
+      }
+  
+      return {
+        ...prevTasks,
+        [currentTab]: updatedCurrentTabTasks,
+        [targetTab]: [...prevTasks[targetTab], taskToMove],
+      };
+    });
   };
 
   return (
@@ -54,11 +73,11 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
       </TabContainer>
 
       <ShootSection hasScrollbar={tasks[activeTab].length > 3} isExpanded={isExpanded}>
-  {tasks[activeTab].length === 0 ? (
-    <EmptyState>
-      <EmptyIcon
-        dangerouslySetInnerHTML={{
-          __html: `
+        {tasks[activeTab].length === 0 ? (
+          <EmptyState>
+            <EmptyIcon
+            dangerouslySetInnerHTML={{
+              __html: `
           <svg width="94" height="44" viewBox="0 0 94 44" fill="none" xmlns="http://www.w3.org/2000/svg">
 <mask id="path-1-inside-1_183_1474" fill="white">
 <path fill-rule="evenodd" clip-rule="evenodd" d="M37.3479 6.78028V6.78028C37.2398 6.68689 37.13 6.59499 37.0301 6.49286C33.1099 2.48643 27.6425 0 21.5944 0C9.66813 0 5.21308e-07 9.66812 0 21.5944C-5.21322e-07 33.5206 9.66812 43.1887 21.5944 43.1887C27.7506 43.1887 33.3052 40.6126 37.2388 36.4795C37.4775 36.2287 37.7568 36.0187 38.0081 35.7804V35.7804L43.0318 31.0165C44.6742 29.4592 47.2294 29.3998 48.9423 30.8792L55.7045 36.7197V36.7197C55.8126 36.8131 55.9223 36.905 56.0222 37.0071C59.9425 41.0135 65.4099 43.5 71.458 43.5C83.3843 43.5 93.0524 33.8319 93.0524 21.9056C93.0524 9.97941 83.3843 0.311285 71.458 0.311286C65.3018 0.311286 59.7472 2.8874 55.8136 7.02044C55.5748 7.27126 55.2955 7.48131 55.0443 7.71957V7.71957L50.0205 12.4834C48.3782 14.0408 45.823 14.1002 44.1101 12.6208L37.3479 6.78028Z"/>
@@ -69,7 +88,7 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
         }}
       />
       <EmptyText>Your Shoot is empty.</EmptyText>
-    </EmptyState>
+      </EmptyState>
   ) : (
       <TaskList>
         {tasks[activeTab].map((task, index) => (
@@ -100,32 +119,32 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
             </TaskContent>
             <StatusButton onClick={() => toggleDropdown(index)}>
               <IconContainer>
-                <div dangerouslySetInnerHTML={{ __html: icons[activeTab].active }} />
+                <div dangerouslySetInnerHTML={{ __html: activeTab !== 'mentioned' ? icons[activeTab].active : icons.yet.active }} />
               </IconContainer>
               <ArrowIcon
-                dangerouslySetInnerHTML={{
-                  __html: dropdownOpen[index]
-                    ? `<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.22488 14.5532C5.08197 14.6783 5 14.8589 5 15.0488C5 15.6146 5.66635 15.9169 6.09213 15.5444L12 10.375L17.9079 15.5444C18.3336 15.9169 19 15.6146 19 15.0488C19 14.8589 18.918 14.6783 18.7751 14.5532L12 8.625L5.22488 14.5532Z" fill="#707374"/></svg>`
-                    : `<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.22488 10.5718C5.08197 10.4467 5 10.2661 5 10.0762C5 9.51043 5.66635 9.20806 6.09213 9.58062L12 14.75L17.9079 9.58061C18.3336 9.20806 19 9.51043 19 10.0762C19 10.2661 18.918 10.4467 18.7751 10.5718L12 16.5L5.22488 10.5718Z" fill="#707374"/></svg>`,
-                }}
+              dangerouslySetInnerHTML={{
+                __html: dropdownOpen[index]
+                ? `<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.22488 14.5532C5.08197 14.6783 5 14.8589 5 15.0488C5 15.6146 5.66635 15.9169 6.09213 15.5444L12 10.375L17.9079 15.5444C18.3336 15.9169 19 15.6146 19 15.0488C19 14.8589 18.918 14.6783 18.7751 14.5532L12 8.625L5.22488 14.5532Z" fill="#707374"/></svg>`
+                : `<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.22488 10.5718C5.08197 10.4467 5 10.2661 5 10.0762C5 9.51043 5.66635 9.20806 6.09213 9.58062L12 14.75L17.9079 9.58061C18.3336 9.20806 19 9.51043 19 10.0762C19 10.2661 18.918 10.4467 18.7751 10.5718L12 16.5L5.22488 10.5718Z" fill="#707374"/></svg>`,
+              }}
               />
               {dropdownOpen[index] && (
-                  <DropdownMenu>
-                    <DropdownItem onClick={() => setActiveTab('yet')} selected={activeTab === 'yet'}>
-                      <Icon dangerouslySetInnerHTML={{ __html: activeTab === 'yet' ? icons.yet.active : icons.yet.inactive }} />
-                      Yet
+                <DropdownMenu>
+                  <DropdownItem onClick={() => moveTaskToTab(index, activeTab, 'yet')} selected={activeTab === 'yet'}>
+                    <Icon dangerouslySetInnerHTML={{ __html: activeTab === 'yet' ? icons.yet.active : icons.yet.inactive }} />
+                    Yet
+                  </DropdownItem>
+                  <DropdownItem onClick={() => moveTaskToTab(index, activeTab, 'doing')} selected={activeTab === 'doing'}>
+                    <Icon dangerouslySetInnerHTML={{ __html: activeTab === 'doing' ? icons.doing.active : icons.doing.inactive }} />
+                    Now
+                  </DropdownItem>
+                  <DropdownItem onClick={() => moveTaskToTab(index, activeTab, 'done')} selected={activeTab === 'done'}>
+                    <Icon dangerouslySetInnerHTML={{ __html: activeTab === 'done' ? icons.done.active : icons.done.inactive }} />
+                    Done
                     </DropdownItem>
-                    <DropdownItem onClick={() => setActiveTab('doing')} selected={activeTab === 'doing'}>
-                      <Icon dangerouslySetInnerHTML={{ __html: activeTab === 'doing' ? icons.doing.active : icons.doing.inactive }} />
-                      Now
-                    </DropdownItem>
-                    <DropdownItem onClick={() => setActiveTab('done')} selected={activeTab === 'done'}>
-                      <Icon dangerouslySetInnerHTML={{ __html: activeTab === 'done' ? icons.done.active : icons.done.inactive }} />
-                      Done
-                    </DropdownItem>
-                  </DropdownMenu>
-                )}
-            </StatusButton>
+                </DropdownMenu>
+              )}
+              </StatusButton>
           </TaskItem>
         ))}
       </TaskList>
