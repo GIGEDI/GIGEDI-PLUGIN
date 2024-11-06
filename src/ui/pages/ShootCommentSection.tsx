@@ -22,6 +22,7 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
       { name: 'CRYSTAL', text: '와이어프레임 확인해 주세요.', page: '메인페이지 플로우 | ', time: 'Just now' },
       { name: 'TAEK', text: '@지선 @SUJIN.K 백엔드분들 이해 안 가나요?', page: '메인페이지 플로우 | ', time: '1 day ago' },
       { name: 'GAUN', text: '이거 폰트 컬러 안 바뀐 것 같아요!', page: '메인페이지 플로우 | ', time: '12 hours ago' },
+      { name: 'GAUN', text: '이거 폰트 컬러 안 바뀐 것 같아요!', page: '메인페이지 플로우 | ', time: '12 hours ago' },
     ],
     doing: [
       { name: 'JIN', text: '플로우 다 확인했나요?', page: '메인페이지 플로우 | ', time: '2 hours ago' },
@@ -52,7 +53,7 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
         ))}
       </TabContainer>
 
-    <ShootSection isExpanded={isExpanded}>
+    <ShootSection hasScrollbar={tasks[activeTab].length > 3} isExpanded={isExpanded}>
       <TaskList>
         {tasks[activeTab].map((task, index) => (
           <TaskItem key={index}>
@@ -173,13 +174,14 @@ const icons = {
     }
   };
 
-  const ShootSection = styled.section<{ isExpanded: boolean }>`
+
+const ShootSection = styled.section<{ hasScrollbar: boolean; isExpanded: boolean }>`
   background-color: ${({ theme }) => theme.colors.grey80};
   padding: 15px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: ${({ hasScrollbar }) => (hasScrollbar ? 'auto' : 'hidden')};
   width: 520px;
   max-height: 230px;
   scrollbar-width: thin;
@@ -189,7 +191,7 @@ const icons = {
   margin-bottom: ${({ isExpanded }) => (isExpanded ? '50px' : '0')};
 
   &::-webkit-scrollbar {
-    width: 6px;
+    width: ${({ hasScrollbar }) => (hasScrollbar ? '6px' : '0')};
   }
 
   &::-webkit-scrollbar-thumb {

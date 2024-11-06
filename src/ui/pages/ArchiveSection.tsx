@@ -7,11 +7,14 @@ const ArchiveSection: React.FC = () => {
     { text: '메인페이지 플로우', count: 3 },
     { text: '디자인시스템 시안1', count: 12 },
     { text: '컬러시스템(확정)', count: 7 },
+    { text: '메인페이지 플로우', count: 3 },
+    { text: '컬러시스템(확정)', count: 7 },
+    { text: '컬러시스템(확정)', count: 7 },
   ];
 
   return (
     <ArchiveWrapper>
-      <ArchiveContent>
+      <ArchiveContent hasScrollbar={archiveItems.length > 5}>
         <CreateButton>+ Create</CreateButton>
         {archiveItems.map((item, index) => (
           <ArchiveItem key={index}>
@@ -49,9 +52,9 @@ const ArchiveWrapper = styled.div`
   flex-direction: column;
 `;
 
-const ArchiveContent = styled.div`
+const ArchiveContent = styled.div<{ hasScrollbar: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.grey80};
-  padding-left: 12px;
+  padding-left: ${({ hasScrollbar }) => (hasScrollbar ? '12px' : '0')}; /* Remove left padding if no scrollbar */
   padding-top: 12px;
   border-radius: 6px;
   flex: 1;
@@ -61,13 +64,17 @@ const ArchiveContent = styled.div`
   scrollbar-color: ${({ theme }) => theme.colors.grey70} transparent;
 
   &::-webkit-scrollbar {
-    width: 6px;
+    width: ${({ hasScrollbar }) => (hasScrollbar ? '6px' : '0')};
   }
 
   &::-webkit-scrollbar-thumb {
     background-color: ${({ theme }) => theme.colors.grey60};
     border-radius: 10px;
   }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ArchiveItem = styled.div`
@@ -81,6 +88,7 @@ const ArchiveItem = styled.div`
   align-items: center;
   border: 1px solid ${({ theme }) => theme.colors.grey70};
   margin-bottom: 8px;
+  max-width: 496px;
 `;
 
 const ArchiveText = styled(SmallText)`
@@ -129,6 +137,7 @@ const CreateButton = styled(MediumText)`
   height: 48px;
   text-align: center;
   margin-bottom: 8px;
+  max-width: 496px;
 `;
 
 export default ArchiveSection;
