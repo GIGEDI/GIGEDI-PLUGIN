@@ -26,11 +26,17 @@ const InfoModal: React.FC<InfoModalProps> = ({ isOpen, onClose }) => {
 
 const Overlay = styled.div`
   position: fixed;
-  top: 86px;
-  left: 60px;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding-top: 86px; 
+  padding-left: 60px; 
+  z-index: 1000;
+  background: transparent; 
 `;
 
 const ModalContainer = styled.div`
