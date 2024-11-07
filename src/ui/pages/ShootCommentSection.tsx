@@ -117,7 +117,7 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
                 )}
               </TaskText>
             </TaskContent>
-            <StatusButton onClick={() => toggleDropdown(index)}>
+            <StatusButton isOpen={dropdownOpen[index]} onClick={() => toggleDropdown(index)}>
               <IconContainer>
                 <div dangerouslySetInnerHTML={{ __html: activeTab !== 'mentioned' ? icons[activeTab].active : icons.yet.active }} />
               </IconContainer>
@@ -306,9 +306,9 @@ const HighlightText = styled(SmallText)`
   margin-right: 5px;
 `;
 
-const StatusButton = styled.button`
+const StatusButton = styled.button<{ isOpen: boolean }>`
   background: ${({ theme }) => theme.colors.grey80};
-  border: 1px solid ${({ theme }) => theme.colors.grey75};
+  border: 1px solid ${({ isOpen, theme }) => (isOpen ? theme.colors.base : theme.colors.grey75)};
   color: ${({ theme }) => theme.colors.grey40};
   width: 72px;
   height: 36px;
