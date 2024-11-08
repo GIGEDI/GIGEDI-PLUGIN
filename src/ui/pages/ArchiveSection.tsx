@@ -1,30 +1,52 @@
-import React, {useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { SmallText, MediumText } from '../styles/typo';
 
 interface ArchiveSectionProps {
-  setArchiveCount: (count: number) => void; 
+  setArchiveCount: (count: number) => void;
 }
 
 const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
-  const archiveItems = [
+  const [archiveItems, setArchiveItems] = useState([
     { text: '메인페이지 플로우', count: 3 },
     { text: '디자인시스템 시안1', count: 12 },
     { text: '컬러시스템(확정)', count: 7 },
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '컬러시스템(확정)', count: 7 },
-    { text: '컬러시스템(확정)', count: 7 },
-    { text: '컬러시스템(확정)', count: 7 },
-  ];
+  ]);
+
+  const [isCreating, setIsCreating] = useState(false);
+  const [newArchive, setNewArchive] = useState('');
 
   useEffect(() => {
     setArchiveCount(archiveItems.length);
   }, [archiveItems.length, setArchiveCount]);
 
+  const handleCreate = () => {
+    setIsCreating(true);
+  };
+
+  const handleSave = () => {
+    if (newArchive.trim() !== '') {
+      setArchiveItems([...archiveItems, { text: newArchive, count: 0 }]);
+      setNewArchive('');
+    }
+    setIsCreating(false);
+  };
+
   return (
     <ArchiveWrapper>
       <ArchiveContent hasScrollbar={archiveItems.length > 5}>
-        <CreateButton>+ Create</CreateButton>
+        <CreateButton onClick={handleCreate}>+ Create</CreateButton>
+        {isCreating && (
+          <InputContainer>
+            <StyledInput
+              placeholder="New Archive"
+              value={newArchive}
+              onChange={(e) => setNewArchive((e.target as HTMLInputElement).value)}
+            />
+            <CancelButton onClick={() => setIsCreating(false)}>Cancel</CancelButton>
+            <SaveButton onClick={handleSave}>Save</SaveButton>
+          </InputContainer>
+        )}
         {archiveItems.map((item, index) => (
           <ArchiveItem key={index}>
             <ArchiveText>
@@ -56,14 +78,14 @@ const ArchiveWrapper = styled.div`
   width: 520px;
   height: 368px;
   border-radius: 8px;
-  border: 0.5px solid ${({ theme }) => theme.colors.grey80};
+  border: 1px solid ${({ theme }) => theme.colors.grey80};
   display: flex;
   flex-direction: column;
 `;
 
 const ArchiveContent = styled.div<{ hasScrollbar: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.grey80};
-  padding-left: ${({ hasScrollbar }) => (hasScrollbar ? '12px' : '0')}; /* Remove left padding if no scrollbar */
+  padding-left: ${({ hasScrollbar }) => (hasScrollbar ? '12px' : '0')}; 
   padding-top: 12px;
   border-radius: 6px;
   flex: 1;
@@ -149,5 +171,57 @@ const CreateButton = styled(MediumText)`
   max-width: 496px;
 `;
 
-export default ArchiveSection;
+const InputContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  border-radius: 6px;
+  border: 1px solid ${({ theme }) => theme.colors.base}; 
+  padding: 10px;
+  margin-bottom: 8px;
+  width: 100%;
+  max-width: 496px;
+  align-items: center;
+  justify-content: center;
+`;
 
+const StyledInput = styled.input`
+  width: 338px;
+  height: 37px;
+  border: 1px solid ${({ theme }) => theme.colors.grey75};
+  border-radius: 6px;
+  background-color: ${({ theme }) => theme.colors.grey80};
+  color: ${({ theme }) => theme.colors.white};
+  padding: 8px 10px;
+  font-size: ${({ theme }) => theme.fontSize.small};
+  font-family: inherit;
+  outline: none;
+
+  &::placeholder {
+    color: ${({ theme }) => theme.colors.grey50};
+  }
+`;
+
+const CancelButton = styled.button`
+  padding: 8px 10px;
+  width: 65px;
+  height: 37px;
+  border-radius: 6px;
+  border: 1px solid ${({ theme }) => theme.colors.grey60};
+  background-color: transparent;
+  color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
+`;
+
+const SaveButton = styled.button`
+  padding: 8px 10px;
+  width: 53px;
+  height: 37px;
+  border-radius: 6px;
+  border: none;
+  background-color: ${({ theme }) => theme.colors.tint30}; 
+  color: ${({ theme }) => theme.colors.black}; 
+  font-weight: 700;
+  cursor: pointer;
+`;
+
+export default ArchiveSection;
