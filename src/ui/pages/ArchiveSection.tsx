@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { SmallText, MediumText } from '../styles/typo';
+import LimitModal from '../modals/limitModal';
 
 interface ArchiveSectionProps {
   setArchiveCount: (count: number) => void;
@@ -11,17 +12,39 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
     { text: '메인페이지 플로우', count: 3 },
     { text: '디자인시스템 시안1', count: 12 },
     { text: '컬러시스템(확정)', count: 7 },
+    { text: '메인페이지 플로우', count: 3 },
+    { text: '디자인시스템 시안1', count: 12 },
+    { text: '컬러시스템(확정)', count: 7 },
+    { text: '메인페이지 플로우', count: 3 },
+    { text: '디자인시스템 시안1', count: 12 },
+    { text: '컬러시스템(확정)', count: 7 },
+    { text: '메인페이지 플로우', count: 3 },
+    { text: '메인페이지 플로우', count: 3 },
+    { text: '디자인시스템 시안1', count: 12 },
+    { text: '컬러시스템(확정)', count: 7 },
+    { text: '메인페이지 플로우', count: 3 },
+    { text: '디자인시스템 시안1', count: 12 },
+    { text: '컬러시스템(확정)', count: 7 },
+    { text: '메인페이지 플로우', count: 3 },
+    { text: '디자인시스템 시안1', count: 12 },
+    { text: '메인페이지 플로우', count: 3 },
+    /*{ text: '디자인시스템 시안1', count: 12 },*/
   ]);
 
   const [isCreating, setIsCreating] = useState(false);
   const [newArchive, setNewArchive] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     setArchiveCount(archiveItems.length);
   }, [archiveItems.length, setArchiveCount]);
 
   const handleCreate = () => {
-    setIsCreating(true);
+    if (archiveItems.length >= 20) {
+      setIsModalOpen(true);
+    } else {
+      setIsCreating(true);
+    }
   };
 
   const handleSave = () => {
@@ -35,7 +58,12 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
   return (
     <ArchiveWrapper>
       <ArchiveContent hasScrollbar={archiveItems.length > 5}>
-        <CreateButton onClick={handleCreate}>+ Create</CreateButton>
+        <CreateButton
+          onClick={handleCreate}
+          disabled={archiveItems.length >= 20}
+        >
+          + Create
+        </CreateButton>
         {isCreating && (
           <InputContainer>
             <StyledInput
@@ -70,6 +98,9 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
           </ArchiveItem>
         ))}
       </ArchiveContent>
+      {isModalOpen && (
+        <LimitModal highlightText="ARCHIVES" onClose={() => setIsModalOpen(false)} />
+      )}
     </ArchiveWrapper>
   );
 };
@@ -157,13 +188,14 @@ const DotsIcon = styled.div`
   }
 `;
 
-const CreateButton = styled(MediumText)`
-  background-color: transparent;
-  color: ${({ theme }) => theme.colors.tint20};
+const CreateButton = styled(MediumText)<{ disabled: boolean }>`
+  background-color: ${({ theme, disabled }) =>
+    disabled ? theme.colors.grey60 : 'transparent'};
+  color: ${({ theme, disabled }) => (disabled ? theme.colors.white : theme.colors.tint20)};
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.colors.grey60};
   border-radius: 8px;
-  cursor: pointer;
+  cursor: 'pointer';
   width: 100%;
   height: 48px;
   text-align: center;

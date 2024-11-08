@@ -58,7 +58,7 @@ const TextContent = styled.div`
   line-height: 1.4;
   
   strong {
-    font-weight: 600;
+    font-weight: 700;
   }
 `;
 
