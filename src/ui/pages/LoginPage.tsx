@@ -40,10 +40,7 @@ fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.shoo
   .catch(error => {
     console.error('서버에 접근할 수 없습니다.', error);
   });
-
-
-
-
+  
 
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => (
   <LoginWrapper>
