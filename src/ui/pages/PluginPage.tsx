@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { LargeText, SmallDetailText } from '../styles/typo';
-import ShootCommentSection from './ShootCommentSection';
-import ArchiveSection from './ArchiveSection';
+import ShootCommentSection from '../sections/ShootCommentSection';
+import ArchiveSection from '../sections/ArchiveSection';
 import InfoModal from '../modals/InfoModal';
 
 const PluginPage: React.FC = () => {
