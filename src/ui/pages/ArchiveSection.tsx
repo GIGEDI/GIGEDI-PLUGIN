@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useRecoilState } from 'recoil';
+import { archiveItemsAtom } from '../atoms/archiveItemsAtom';
 import styled from 'styled-components';
 import { SmallText, MediumText } from '../styles/typo';
 import LimitModal from '../modals/LimitModal';
@@ -10,29 +12,7 @@ interface ArchiveSectionProps {
 }
 
 const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
-  const [archiveItems, setArchiveItems] = useState([
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '디자인시스템 시안1', count: 12 },
-    { text: '컬러시스템(확정)', count: 7 },
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '디자인시스템 시안1', count: 12 },
-    { text: '컬러시스템(확정)', count: 7 },
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '디자인시스템 시안1', count: 12 },
-    { text: '컬러시스템(확정)', count: 7 },
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '디자인시스템 시안1', count: 12 },
-    { text: '컬러시스템(확정)', count: 7 },
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '디자인시스템 시안1', count: 12 },
-    { text: '컬러시스템(확정)', count: 7 },
-    { text: '메인페이지 플로우', count: 3 },
-    { text: '디자인시스템 시안1', count: 12 },
-    { text: '메인페이지 플로우', count: 3 },
-    /*{ text: '디자인시스템 시안1', count: 12 },*/
-  ]);
-
+  const [archiveItems, setArchiveItems] = useRecoilState(archiveItemsAtom);
   const [isCreating, setIsCreating] = useState(false);
   const [newArchive, setNewArchive] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -58,18 +38,21 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
   const handleSave = () => {
     if (newArchive.trim() === '') return;
 
-    if (isEditing && editingIndex !== null) {
-      const updatedItems = [...archiveItems];
-      updatedItems[editingIndex].text = newArchive;
-      setArchiveItems(updatedItems);
-      setIsEditing(false);
-      setEditingIndex(null);
-    } else {
-      setArchiveItems([...archiveItems, { text: newArchive, count: 0 }]);
-    }
-
+    setArchiveItems((prevItems) => {
+      if (isEditing && editingIndex !== null) {
+        const updatedItems = prevItems.map((item, index) =>
+          index === editingIndex ? { ...item, text: newArchive } : item
+        );
+        return updatedItems;
+      } else {
+        return [...prevItems, { text: newArchive, count: 0 }];
+      }
+    });
+  
     setNewArchive('');
     setIsCreating(false);
+    setIsEditing(false);
+    setEditingIndex(null);
   };
 
   const handleDotsClick = (index: number) => {

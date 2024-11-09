@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React from 'react';
+import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { SmallText, SmallDetailText } from '../styles/typo';
-import { useRecoilState } from 'recoil';
-import { tasksAtom } from '../recoil/tasksAtom';
+import { tasksAtom } from '../atoms/tasksAtom';
 
 interface ShootCommentSectionProps {
   activeTab: 'yet' | 'doing' | 'done' | 'mentioned';
