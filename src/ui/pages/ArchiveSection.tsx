@@ -39,6 +39,9 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
   const [kebabMenuOpenIndex, setKebabMenuOpenIndex] = useState<number | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedIndexForDelete, setSelectedIndexForDelete] = useState<number | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
+
 
   useEffect(() => {
     setArchiveCount(archiveItems.length);
@@ -53,10 +56,19 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
   };
 
   const handleSave = () => {
-    if (newArchive.trim() !== '') {
+    if (newArchive.trim() === '') return;
+
+    if (isEditing && editingIndex !== null) {
+      const updatedItems = [...archiveItems];
+      updatedItems[editingIndex].text = newArchive;
+      setArchiveItems(updatedItems);
+      setIsEditing(false);
+      setEditingIndex(null);
+    } else {
       setArchiveItems([...archiveItems, { text: newArchive, count: 0 }]);
-      setNewArchive('');
     }
+
+    setNewArchive('');
     setIsCreating(false);
   };
 
@@ -65,13 +77,15 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
   };
 
   const handleEdit = (index: number) => {
-    console.log(`Edit item at index ${index}`);
-    setKebabMenuOpenIndex(null);
+    setNewArchive(archiveItems[index].text); 
+    setIsEditing(true); 
+    setEditingIndex(index); 
+    setKebabMenuOpenIndex(null); 
   };
 
   const handleDelete = (index: number) => {
     setKebabMenuOpenIndex(null);
-    setSelectedIndexForDelete(index); // 삭제할 아이템 인덱스 저장
+    setSelectedIndexForDelete(index);
     setIsDeleteModalOpen(true); 
   };
 
@@ -93,14 +107,18 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
         >
           + Create
         </CreateButton>
-        {isCreating && (
+        {(isCreating || isEditing) && (
           <InputContainer>
             <StyledInput
-              placeholder="New Archive"
+              placeholder="Archive Name"
               value={newArchive}
-              onChange={(e) => setNewArchive((e.target as HTMLInputElement).value)}
+              onChange={(e) => setNewArchive(e.target.value)}
             />
-            <CancelButton onClick={() => setIsCreating(false)}>Cancel</CancelButton>
+            <CancelButton onClick={() => {
+              setIsCreating(false);
+              setIsEditing(false);
+              setNewArchive('');
+            }}>Cancel</CancelButton>
             <SaveButton onClick={handleSave}>Save</SaveButton>
           </InputContainer>
         )}
