@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { LargeText, SmallDetailText } from '../styles/typo';
 import ShootCommentSection from './ShootCommentSection';
 import ArchiveSection from './ArchiveSection';
-import InfoModal from '../modals/infoModal';
+import InfoModal from '../modals/InfoModal';
 
 const PluginPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'yet' | 'doing' | 'done' | 'mentioned'>('yet');

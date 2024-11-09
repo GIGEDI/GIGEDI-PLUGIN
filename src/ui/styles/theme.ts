@@ -25,7 +25,8 @@ export const theme: DefaultTheme = {
       grey75: "#3E3F40",
       grey80: "#303033",
       grey90: "#1D1E1F",
-      grey100: "#000000"
+      grey100: "#000000",
+      warning: "#D82356",
     },
     fontSize: {
       large: "19px",
