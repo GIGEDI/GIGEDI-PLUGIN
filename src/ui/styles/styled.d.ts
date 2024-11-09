@@ -27,6 +27,7 @@ declare module 'styled-components' {
       grey80: string;
       grey90: string;
       grey100: string;
+      warning: string;
     };
     fontSize: {
       large: string;

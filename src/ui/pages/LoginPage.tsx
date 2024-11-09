@@ -5,6 +5,43 @@ interface LoginPageProps {
   onLogin: () => void; 
 }
 
+fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.shoot-manage.com/api/v1/members/info')}`)
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error('서버에 접근할 수 있지만, 응답 상태가 정상이 아닙니다.', response.status);
+      return null;
+    }
+  })
+  .then(data => {
+    if (data && data.contents) {
+      console.log('서버 응답 데이터:', JSON.parse(data.contents));
+    }
+  })
+  .catch(error => {
+    console.error('서버에 접근할 수 없습니다.', error);
+  });
+
+  fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://api.shoot-manage.com/')}`)
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      console.error('서버에 접근할 수 있지만, 응답 상태가 정상이 아닙니다.', response.status);
+      return null;
+    }
+  })
+  .then(data => {
+    if (data && data.contents) {
+      console.log('서버 응답 데이터:', JSON.parse(data.contents));
+    }
+  })
+  .catch(error => {
+    console.error('서버에 접근할 수 없습니다.', error);
+  });
+  
+
 const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => (
   <LoginWrapper>
     {/* 로고 */}
