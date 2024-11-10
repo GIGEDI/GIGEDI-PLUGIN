@@ -13,18 +13,20 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
   const [shootStatuses, setShootStatuses] = useState(
     shoots.map(() => 'yet' as 'yet' | 'doing' | 'done')
   );
-
+  
   const [inputText, setInputText] = useState('');
-  const [statusCounts, setStatusCounts] = useState({ yet: 0, doing: 0, done: 0 });
+  const [statusCounts, setStatusCounts] = useState(
+    shoots.map(() => ({ yet: 0, doing: 0, done: 0 }))
+  );
 
-  const handleIconClick = (index: number, status: 'yet' | 'doing' | 'done') => {
+  const handleIconClick = (index: number, newStatus: 'yet' | 'doing' | 'done') => {
     const updatedStatuses = [...shootStatuses];
-    updatedStatuses[index] = status;
+    updatedStatuses[index] = newStatus;
     setShootStatuses(updatedStatuses);
 
-    const newCounts = { ...statusCounts };
-    newCounts[status] += 1;
-    setStatusCounts(newCounts);
+    const updatedCounts = [...statusCounts];
+    updatedCounts[index][newStatus] += 1;
+    setStatusCounts(updatedCounts);
   };
 
   return (
@@ -61,10 +63,14 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
                       key={status}
                       isActive={shootStatuses[index] === status}
                       onClick={() => handleIconClick(index, status)}
-                      dangerouslySetInnerHTML={{
-                        __html: shootStatuses[index] === status ? icons[status].active : icons[status].inactive,
-                      }}
-                    />
+                    >
+                      <IconWrapper
+                        dangerouslySetInnerHTML={{
+                          __html: shootStatuses[index] === status ? icons[status].active : icons[status].inactive,
+                        }}
+                      />
+                      <StatusCounter>{statusCounts[index][status]}</StatusCounter>
+                    </IconTab>
                   ))}
                 </IconTabs>
               </ContentContainer>
@@ -224,6 +230,12 @@ const CloseButton = styled.button`
   top: 2px;
 `;
 
+const IconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const IconTabs = styled.div`
   display: flex;
   justify-content: flex-end;
@@ -316,6 +328,12 @@ const SendButton = styled.button`
   padding: 0;
   margin-left: 8px;
   height: 100%;
+`;
+
+const StatusCounter = styled.div`
+  font-size: 14px;
+  margin-left: 4px;
+  color: ${({ theme }) => theme.colors.white};
 `;
 
 
