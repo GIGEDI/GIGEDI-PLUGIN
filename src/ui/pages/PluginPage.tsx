@@ -6,7 +6,7 @@ import ShootCommentSection from '../sections/ShootCommentSection';
 import ArchiveSection from '../sections/ArchiveSection';
 import BlockSection from '../sections/BlockSection';
 import InfoModal from '../modals/InfoModal';
-import { archiveItemsAtom, ArchiveItem, BlockItem } from '../atoms/archiveItemsAtom';
+import { archiveItemsAtom, ArchiveItem } from '../atoms/archiveItemsAtom';
 
 const PluginPage: React.FC = () => {
   const [archiveItems, setArchiveItems] = useRecoilState(archiveItemsAtom);
@@ -101,8 +101,8 @@ const PluginPage: React.FC = () => {
           {!selectedArchive ? (
             <ArchiveSection
             setArchiveCount={setCurrentArchiveCount}
-            onSelectArchive={(archive) => setSelectedArchive(archive)}
-            totalArchiveCount={archiveItems.length}
+            onSelectArchive={(archive) => setSelectedArchive(archive as ArchiveItem)}
+            totalArchiveCount={20}
             />
           ) : (
           <BlockSection

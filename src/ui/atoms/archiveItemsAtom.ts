@@ -1,8 +1,16 @@
 import { atom } from 'recoil';
 
+export interface Shoot {
+  username: string;
+  imgUrl: string;
+  content: string;
+  timestamp: string;
+}
+
 export interface BlockItem {
   text: string;
   count: number;
+  shoots: Shoot[];
 }
 
 export interface ArchiveItem {
@@ -18,177 +26,984 @@ export const archiveItemsAtom = atom<ArchiveItem[]>({
       text: '메인페이지 플로우',
       count: 19,
       blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-        { text: '하단 탭', count: 10 },
+      {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+          ],
+        },
       ],
     },
     {
-      text: '디자인시스템 시안1',
-      count: 2,
+      text: '홈페이지 구성',
+      count: 10,
       blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
+        {
+          text: '진행중_홈화면 UI',
+          count: 1,
+          shoots: [
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
       ],
     },
     {
       text: '메인페이지 플로우',
-      count: 3,
+      count: 19,
       blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 2,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
-      ],
-    },
-    {
-      text: '메인페이지 플로우',
-      count: 3,
-      blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 2,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
-      ],
-    },
-    {
-      text: '메인페이지 플로우',
-      count: 3,
-      blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 2,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
       ],
     },
     {
       text: '메인페이지 플로우',
-      count: 3,
+      count: 19,
       blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 2,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
-      ],
-    },
-    {
-      text: '메인페이지 플로우',
-      count: 3,
-      blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 12,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
-      ],
-    },
-    {
-      text: '메인페이지 플로우',
-      count: 3,
-      blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 2,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
       ],
     },
     {
       text: '메인페이지 플로우',
-      count: 3,
+      count: 19,
       blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 2,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
-      ],
-    },
-    {
-      text: '디자인시스템 시안1',
-      count: 2,
-      blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
       ],
     },
     {
       text: '메인페이지 플로우',
-      count: 3,
+      count: 19,
       blocks: [
-        { text: '완료_메인 구성', count: 1 },
-        { text: '진행중_홈화면 UI', count: 1 },
-        { text: '하단 탭', count: 10 },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
       ],
     },
     {
-      text: '디자인시스템 시안1',
-      count: 2,
+      text: '메인페이지 플로우',
+      count: 19,
       blocks: [
-        { text: '버튼 스타일링', count: 5 },
-        { text: '컬러 조정', count: 3 },
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: '메인페이지 플로우',
+      count: 19,
+      blocks: [
+        {
+          text: '완료_메인 구성',
+          count: 1,
+          shoots: [
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
+            {
+              username: 'CRYSTAR',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아니에요',
+              timestamp: '3 hours ago',
+            },
+            {
+              username: 'TAEK',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '아닌데요',
+              timestamp: '10 hours ago',
+            },
+          ],
+        },
       ],
     },
   ],
