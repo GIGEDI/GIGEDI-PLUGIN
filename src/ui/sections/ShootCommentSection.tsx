@@ -203,7 +203,8 @@ const ShootSection = styled.section<{ hasScrollbar: boolean; isExpanded: boolean
   flex-direction: column;
   overflow-y: ${({ hasScrollbar }) => (hasScrollbar ? 'auto' : 'hidden')};
   width: 520px;
-  max-height: 230px;
+  max-height: ${({ isExpanded }) => (isExpanded ? 'auto' : '230px')};
+  height: ${({ isExpanded }) => (isExpanded ? '100%' : '230px')};
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }) => theme.colors.grey70} transparent;
   margin-top: -5px;

@@ -2,19 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 interface DeleteModalProps {
+  highlightText?: string;
   onConfirmDelete: () => void;
   onClose: () => void;
 }
 
-const DeleteModal: React.FC<DeleteModalProps> = ({ onConfirmDelete, onClose }) => {
+const DeleteModal: React.FC<DeleteModalProps> = ({ highlightText, onConfirmDelete, onClose }) => {
   return (
     <ModalOverlay>
       <ModalContainer>
         <ModalContent>
-          <Title>DELETE THIS ARCHIVE?</Title>
+          <Title>DELETE THIS {highlightText.toUpperCase()}?</Title>
           <Description>
             Once deleted, all contents <br />
-            included in the ARCHIVE will <br />
+            included in the {highlightText} will <br />
             be permanently removed.
           </Description>
         </ModalContent>

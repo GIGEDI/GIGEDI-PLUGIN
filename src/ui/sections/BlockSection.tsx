@@ -1,34 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { useRecoilState } from 'recoil';
-import { archiveItemsAtom } from '../atoms/archiveItemsAtom';
 import styled from 'styled-components';
-import { SmallText, MediumText } from '../styles/typo';
+import { SmallDetailText, SmallText, MediumText } from '../styles/typo';
 import LimitModal from '../modals/LimitModal';
 import KebabModal from '../modals/KebabModal';
 import DeleteModal from '../modals/DeleteModal';
+import { ArchiveItem } from '../atoms/archiveItemsAtom';
 
-interface ArchiveSectionProps {
-  setArchiveCount: (count: number) => void;
+interface BlockSectionProps {
+  archive: ArchiveItem;
+  goBack: () => void;
+  setBlockCount: (count: number) => void;
 }
 
-const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
-  const [archiveItems, setArchiveItems] = useRecoilState(archiveItemsAtom);
+const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCount }) => {
   const [isCreating, setIsCreating] = useState(false);
-  const [newArchive, setNewArchive] = useState('');
+  const [newBlock, setNewBlock] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [kebabMenuOpenIndex, setKebabMenuOpenIndex] = useState<number | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedIndexForDelete, setSelectedIndexForDelete] = useState<number | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-
+  const totalBlockCount = 20;
 
   useEffect(() => {
-    setArchiveCount(archiveItems.length);
-  }, [archiveItems.length, setArchiveCount]);
+    setBlockCount(archive.blocks.length);
+  }, [archive.blocks, setBlockCount]);
 
   const handleCreate = () => {
-    if (archiveItems.length >= 20) {
+    if (archive.blocks.length >= 20) {
       setIsModalOpen(true);
     } else {
       setIsCreating(true);
@@ -36,82 +36,93 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
   };
 
   const handleSave = () => {
-    if (newArchive.trim() === '') return;
+    if (newBlock.trim() === '') return;
 
-    setArchiveItems((prevItems) => {
-      if (isEditing && editingIndex !== null) {
-        const updatedItems = prevItems.map((item, index) =>
-          index === editingIndex ? { ...item, text: newArchive } : item
-        );
-        return updatedItems;
-      } else {
-        return [...prevItems, { text: newArchive, count: 0 }];
-      }
-    });
-  
-    setNewArchive('');
+    if (isEditing && editingIndex !== null) {
+      const updatedBlocks = archive.blocks.map((block, index) =>
+        index === editingIndex ? { ...block, text: newBlock } : block
+      );
+      archive.blocks = updatedBlocks;
+    } else {
+      const updatedBlocks = [...archive.blocks, { text: newBlock, count: 0 }];
+      archive.blocks = updatedBlocks;
+    }
+
+    setNewBlock('');
     setIsCreating(false);
     setIsEditing(false);
     setEditingIndex(null);
+    setBlockCount(archive.blocks.length);
+  };
+
+  const handleEdit = (index: number) => {
+    setNewBlock(archive.blocks[index].text);
+    setIsEditing(true);
+    setEditingIndex(index);
+    setKebabMenuOpenIndex(null);
+  };
+
+  const handleDelete = (index: number) => {
+    setSelectedIndexForDelete(index);
+    setIsDeleteModalOpen(true);
+    setKebabMenuOpenIndex(null);
+  };
+
+  const confirmDelete = () => {
+    if (selectedIndexForDelete !== null) {
+      const updatedBlocks = archive.blocks.filter((_, i) => i !== selectedIndexForDelete);
+      archive.blocks = updatedBlocks;
+      setBlockCount(updatedBlocks.length);
+      setSelectedIndexForDelete(null);
+      setIsDeleteModalOpen(false);
+    }
   };
 
   const handleDotsClick = (index: number) => {
     setKebabMenuOpenIndex(index === kebabMenuOpenIndex ? null : index);
   };
 
-  const handleEdit = (index: number) => {
-    setNewArchive(archiveItems[index].text); 
-    setIsEditing(true); 
-    setEditingIndex(index); 
-    setKebabMenuOpenIndex(null); 
-  };
-
-  const handleDelete = (index: number) => {
-    setKebabMenuOpenIndex(null);
-    setSelectedIndexForDelete(index);
-    setIsDeleteModalOpen(true); 
-  };
-
-  const confirmDelete = () => {
-    if (selectedIndexForDelete !== null) {
-      const updatedItems = archiveItems.filter((_, i) => i !== selectedIndexForDelete);
-      setArchiveItems(updatedItems);
-      setSelectedIndexForDelete(null); // 삭제 인덱스 초기화
-      setIsDeleteModalOpen(false); 
-    }
-  };
-
   return (
-    <ArchiveWrapper>
-      <ArchiveContent hasScrollbar={archiveItems.length > 5}>
-        <CreateButton
-          onClick={handleCreate}
-          disabled={archiveItems.length >= 20}
-        >
-          + Create
-        </CreateButton>
+    <>
+    <Header>
+     <BackButton onClick={goBack}>
+     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+       <path d="M13.9282 5.22488C14.0533 5.08197 14.2339 5 14.4238 5C14.9896 5 15.2919 5.66636 14.9194 6.09213L9.75 12L14.9194 17.9079C15.2919 18.3336 14.9896 19 14.4238 19C14.2339 19 14.0533 18.918 13.9282 18.7751L8 12L13.9282 5.22488Z" fill="#F6F6F6"/>
+     </svg>
+     </BackButton>
+     <Title>{archive.text}</Title>
+     <CountContainer>
+        <CountText>{archive.blocks.length}</CountText> 
+        <SeparatorText>/</SeparatorText>
+        <TotalCountText>{totalBlockCount}</TotalCountText> 
+      </CountContainer>
+    </Header>
+
+    <BlockWrapper>
+      <BlockContent hasScrollbar={archive.blocks.length > 5}>
+        <CreateButton onClick={handleCreate} disabled={archive.blocks.length >= 20}>+ Create</CreateButton>
         {(isCreating || isEditing) && (
           <InputContainer>
-            <StyledInput
-              placeholder="Archive Name"
-              value={newArchive}
-              onChange={(e) => setNewArchive(e.target.value)}
-            />
+            <StyledInput placeholder="New Block" value={newBlock} onChange={(e) => setNewBlock(e.target.value)} />
             <CancelButton onClick={() => {
               setIsCreating(false);
               setIsEditing(false);
-              setNewArchive('');
+              setNewBlock('');
             }}>Cancel</CancelButton>
             <SaveButton onClick={handleSave}>Save</SaveButton>
           </InputContainer>
         )}
-        {archiveItems.map((item, index) => (
-          <ArchiveItem key={index}>
-            <ArchiveText>
-              {item.text}
-              <CircleIcon />
-              <ArchiveCountText>{item.count}</ArchiveCountText>
-            </ArchiveText>
+        {archive.blocks.map((block, index) => (
+          <BlockItem key={index}>
+            <BlockText>
+              {block.text}
+              {/* 추후 읽음 여부에 따라 svg 코드 조건 추가*/}
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M11.4857 19.787C11.6221 19.9234 11.8071 20 12 20H12.3636C12.5455 20 12.7273 19.9273 12.8727 19.7891L15.5636 17.0909H18.5455C18.9312 17.0909 19.3012 16.9377 19.574 16.6649C19.8468 16.3921 20 16.0221 20 15.6364V12H19.2C18.9757 12 18.7567 11.9769 18.5455 11.933V15.6364H14.9673L12.7273 17.8764V15.6364H8.36364V8.36364H16V8C16 7.62181 16.0525 7.25588 16.1506 6.90909H8.36364C7.56364 6.90909 6.90909 7.55636 6.90909 8.36364V15.6364C6.90909 16.0221 7.06234 16.3921 7.33512 16.6649C7.6079 16.9377 7.97787 17.0909 8.36364 17.0909H11.2727V19.2727C11.2727 19.4656 11.3494 19.6506 11.4857 19.787ZM16.9143 5.45455H5.45455V14.1818H4V5.45455C4 5.06878 4.15325 4.69881 4.42603 4.42603C4.69881 4.15325 5.06878 4 5.45455 4H17.0909V5.25459C17.0299 5.31924 16.971 5.38593 16.9143 5.45455Z" fill="#D7D7D9"/>
+              <rect x="17" y="5" width="6" height="6" rx="3" fill="#21F5BE"/>
+              </svg>
+              <BlockCountText>{block.count}</BlockCountText>
+            </BlockText>
             <DotsIcon onClick={() => handleDotsClick(index)}>
               <svg
                 width="24"
@@ -131,32 +142,68 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount }) => {
                 onConfirmDelete={() => handleDelete(index)}
               />
             )}
-          </ArchiveItem>
+          </BlockItem>
         ))}
-      </ArchiveContent>
-      {isModalOpen && (
-        <LimitModal highlightText="ARCHIVES" onClose={() => setIsModalOpen(false)} />
-      )}
-      {isDeleteModalOpen && (
-        <DeleteModal
-          onConfirmDelete={confirmDelete}
-          onClose={() => setIsDeleteModalOpen(false)}
-        />
-      )}
-    </ArchiveWrapper>
+      </BlockContent>
+      {isModalOpen && <LimitModal highlightText="BLOCKS" onClose={() => setIsModalOpen(false)} />}
+      {isDeleteModalOpen && <DeleteModal highlightText="BLOCKS" onConfirmDelete={confirmDelete} onClose={() => setIsDeleteModalOpen(false)} />}
+    </BlockWrapper>
+    </>
   );
 };
 
-const ArchiveWrapper = styled.div`
+const BlockWrapper = styled.div`
   width: 520px;
-  height: 368px;
+  height: 321px;
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.colors.grey80};
   display: flex;
   flex-direction: column;
 `;
 
-const ArchiveContent = styled.div<{ hasScrollbar: boolean }>`
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  maring-left: -10px;
+  position: relative;
+  bottom: 8px;
+`;
+
+const BackButton = styled.button`
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+`;
+
+const CountContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+`;
+
+const CountText = styled(SmallDetailText)`
+  color: ${({ theme }) => theme.colors.white};
+  margin-right: 2px;
+`;
+
+const SeparatorText = styled(SmallDetailText)`
+  color: ${({ theme }) => theme.colors.grey50};
+  margin: 0 2px;
+`;
+
+const TotalCountText = styled(SmallDetailText)`
+  color: ${({ theme }) => theme.colors.grey50};
+`;
+
+const Title = styled.div`
+  color: ${({ theme }) => theme.colors.white};
+  font-size: ${({ theme }) => theme.fontSize.small};
+`;
+
+const BlockContent = styled.div<{ hasScrollbar: boolean }>`
   border: 1px solid ${({ theme }) => theme.colors.grey80};
   padding-left: ${({ hasScrollbar }) => (hasScrollbar ? '12px' : '0')}; 
   padding-top: 12px;
@@ -181,10 +228,10 @@ const ArchiveContent = styled.div<{ hasScrollbar: boolean }>`
   align-items: center;
 `;
 
-const ArchiveItem = styled.div`
+const BlockItem = styled.div`
   background-color: ${({ theme }) => theme.colors.grey80};
   width: 100%;
-  height: 48px;
+  height: 60px !important; 
   padding: 12px 16px;
   border-radius: 8px;
   display: flex;
@@ -193,25 +240,17 @@ const ArchiveItem = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.grey70};
   margin-bottom: 8px;
   max-width: 496px;
+  flex-shrink: 0;
 `;
 
-const ArchiveText = styled(SmallText)`
+const BlockText = styled(SmallText)`
   color: ${({ theme }) => theme.colors.white};
   display: flex;
   align-items: center;
   gap: 8px;
 `;
 
-const CircleIcon = styled.div`
-  width: 6px;
-  height: 6px;
-  background-color: ${({ theme }) => theme.colors.base};
-  border-radius: 50%;
-  margin-left: 8px;
-  margin-top: -5px;
-`;
-
-const ArchiveCountText = styled(SmallText)`
+const BlockCountText = styled(SmallText)`
   color: ${({ theme }) => theme.colors.white};
   margin-left: -3px;
 `;
@@ -237,12 +276,13 @@ const CreateButton = styled(MediumText)<{ disabled: boolean }>`
   padding: 10px;
   border: 1px solid ${({ theme }) => theme.colors.grey60};
   border-radius: 8px;
-  cursor: 'pointer';
+  cursor: pointer;
   width: 100%;
   height: 48px;
   text-align: center;
   margin-bottom: 8px;
   max-width: 496px;
+  flex-shrink: 0;
 `;
 
 const InputContainer = styled.div`
@@ -254,8 +294,10 @@ const InputContainer = styled.div`
   margin-bottom: 8px;
   width: 100%;
   max-width: 496px;
+  height: 60px;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 `;
 
 const StyledInput = styled.input`
@@ -298,4 +340,4 @@ const SaveButton = styled.button`
   cursor: pointer;
 `;
 
-export default ArchiveSection;
+export default BlockSection;
