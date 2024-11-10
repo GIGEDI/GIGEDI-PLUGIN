@@ -19,8 +19,10 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
   const [kebabMenuOpenIndex, setKebabMenuOpenIndex] = useState<number | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedIndexForDelete, setSelectedIndexForDelete] = useState<number | null>(null);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const totalBlockCount = 20;
-  
+
   useEffect(() => {
     setBlockCount(archive.blocks.length);
   }, [archive.blocks, setBlockCount]);
@@ -35,21 +37,45 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
 
   const handleSave = () => {
     if (newBlock.trim() === '') return;
-  
-    const updatedBlocks = [...archive.blocks, { text: newBlock, count: 0 }];
-    archive.blocks = updatedBlocks;
-    
+
+    if (isEditing && editingIndex !== null) {
+      const updatedBlocks = archive.blocks.map((block, index) =>
+        index === editingIndex ? { ...block, text: newBlock } : block
+      );
+      archive.blocks = updatedBlocks;
+    } else {
+      const updatedBlocks = [...archive.blocks, { text: newBlock, count: 0 }];
+      archive.blocks = updatedBlocks;
+    }
+
     setNewBlock('');
     setIsCreating(false);
-    setBlockCount(updatedBlocks.length);
+    setIsEditing(false);
+    setEditingIndex(null);
+    setBlockCount(archive.blocks.length);
+  };
+
+  const handleEdit = (index: number) => {
+    setNewBlock(archive.blocks[index].text);
+    setIsEditing(true);
+    setEditingIndex(index);
+    setKebabMenuOpenIndex(null);
   };
 
   const handleDelete = (index: number) => {
-     const updatedBlocks = archive.blocks.filter((_, i) => i !== index);
-     archive.blocks = updatedBlocks;
-     
-     setIsDeleteModalOpen(false);
-     setBlockCount(updatedBlocks.length);
+    setSelectedIndexForDelete(index);
+    setIsDeleteModalOpen(true);
+    setKebabMenuOpenIndex(null);
+  };
+
+  const confirmDelete = () => {
+    if (selectedIndexForDelete !== null) {
+      const updatedBlocks = archive.blocks.filter((_, i) => i !== selectedIndexForDelete);
+      archive.blocks = updatedBlocks;
+      setBlockCount(updatedBlocks.length);
+      setSelectedIndexForDelete(null);
+      setIsDeleteModalOpen(false);
+    }
   };
 
   const handleDotsClick = (index: number) => {
@@ -75,10 +101,14 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
     <BlockWrapper>
       <BlockContent hasScrollbar={archive.blocks.length > 5}>
         <CreateButton onClick={handleCreate} disabled={archive.blocks.length >= 20}>+ Create</CreateButton>
-        {(isCreating) && (
+        {(isCreating || isEditing) && (
           <InputContainer>
             <StyledInput placeholder="New Block" value={newBlock} onChange={(e) => setNewBlock(e.target.value)} />
-            <CancelButton onClick={() => setIsCreating(false)}>Cancel</CancelButton>
+            <CancelButton onClick={() => {
+              setIsCreating(false);
+              setIsEditing(false);
+              setNewBlock('');
+            }}>Cancel</CancelButton>
             <SaveButton onClick={handleSave}>Save</SaveButton>
           </InputContainer>
         )}
@@ -108,7 +138,7 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
             </DotsIcon>
             {kebabMenuOpenIndex === index && (
               <KebabModal
-                onEdit={() => {/* handle edit */}}
+                onEdit={() => handleEdit(index)}
                 onConfirmDelete={() => handleDelete(index)}
               />
             )}
@@ -116,7 +146,7 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
         ))}
       </BlockContent>
       {isModalOpen && <LimitModal highlightText="BLOCKS" onClose={() => setIsModalOpen(false)} />}
-      {isDeleteModalOpen && <DeleteModal onConfirmDelete={() => handleDelete(selectedIndexForDelete!)} onClose={() => setIsDeleteModalOpen(false)} />}
+      {isDeleteModalOpen && <DeleteModal highlightText="BLOCKS" onConfirmDelete={confirmDelete} onClose={() => setIsDeleteModalOpen(false)} />}
     </BlockWrapper>
     </>
   );

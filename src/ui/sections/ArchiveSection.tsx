@@ -164,6 +164,7 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount, onSele
       )}
       {isDeleteModalOpen && (
         <DeleteModal
+          highlightText="ARCHIVE"
           onConfirmDelete={confirmDelete}
           onClose={() => setIsDeleteModalOpen(false)}
         />
