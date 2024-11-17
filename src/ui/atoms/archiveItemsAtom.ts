@@ -54,6 +54,18 @@ export const archiveItemsAtom = atom<ArchiveItem[]>({
               content: '넵',
               timestamp: 'Just now',
             },
+            {
+              username: '류남정',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '상탑 탭 로고 기깔나네! 이 상단 탭 완성본인가요?',
+              timestamp: '12 hours ago',
+            },
+            {
+              username: 'JIN',
+              imgUrl: 'https://github.com/user-attachments/assets/874b4541-4c2a-474d-826f-3df83eab4711',
+              content: '넵',
+              timestamp: 'Just now',
+            },
           ],
         },
         {

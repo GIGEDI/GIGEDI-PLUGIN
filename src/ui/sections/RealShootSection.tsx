@@ -165,7 +165,7 @@ const icons = {
 const ShootContainerWrapper = styled.div`
   width: 520px;
   height: 350px;
-  min-height: 321px;
+  max-height: 1200px;
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.colors.grey80};
   display: flex;
@@ -178,7 +178,9 @@ const ShootContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.tint20};
   border-radius: 10px;
   width: 495px;
-  height: 340px;
+  height: auto;
+  min-height: 253px;
+  max-height: 340px; // 최대 높이를 제한합니다.
   margin: 10px auto;
   padding: 10px;
   background-color: ${({ theme }) => theme.colors.grey80};
@@ -188,7 +190,6 @@ const ShootContent = styled.div<{ hasScrollbar: boolean }>`
   flex: 1;
   overflow-y: auto;
   padding: ${({ hasScrollbar }) => (hasScrollbar ? '8px 12px 8px 0' : '8px')};
-  max-height: 300px;
   scrollbar-width: thin;
   scrollbar-color: ${({ theme }) => theme.colors.grey70} transparent;
 
