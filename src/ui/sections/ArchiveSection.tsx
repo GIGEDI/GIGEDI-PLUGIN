@@ -188,7 +188,7 @@ const CountContainer = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  top: 400px;
+  top: 415px;
   left: 500px;
 `;
 

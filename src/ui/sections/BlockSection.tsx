@@ -11,6 +11,7 @@ interface BlockSectionProps {
   archive: ArchiveItem;
   goBack: () => void;
   setBlockCount: (count: number) => void;
+  archiveTitle: string;
 }
 
 const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCount }) => {
@@ -94,12 +95,7 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
   return (
     <>
     <Header>
-     <BackButton onClick={goBack}>
-     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-       <path d="M13.9282 5.22488C14.0533 5.08197 14.2339 5 14.4238 5C14.9896 5 15.2919 5.66636 14.9194 6.09213L9.75 12L14.9194 17.9079C15.2919 18.3336 14.9896 19 14.4238 19C14.2339 19 14.0533 18.918 13.9282 18.7751L8 12L13.9282 5.22488Z" fill="#F6F6F6"/>
-     </svg>
-     </BackButton>
-     <Title>{archive.text}</Title>
+     {/*<Title>{archive.text}</Title>*/}
      <CountContainer>
         <CountText>{archive.blocks.length}</CountText> 
         <SeparatorText>/</SeparatorText>
@@ -107,7 +103,6 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
       </CountContainer>
     </Header>
 
-    
         {!selectedBlock ? (
           <>
           <BlockWrapper>
@@ -189,19 +184,12 @@ const Header = styled.div`
   bottom: 8px;
 `;
 
-const BackButton = styled.button`
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  display: flex;
-  align-items: center;
-`;
-
 const CountContainer = styled.div`
   display: flex;
   align-items: center;
-  margin-left: auto;
+  position: absolute;
+  top: -40px;
+  left: 480px;
 `;
 
 const CountText = styled(SmallDetailText)`
@@ -216,11 +204,6 @@ const SeparatorText = styled(SmallDetailText)`
 
 const TotalCountText = styled(SmallDetailText)`
   color: ${({ theme }) => theme.colors.grey50};
-`;
-
-const Title = styled.div`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.fontSize.small};
 `;
 
 const BlockContent = styled.div<{ hasScrollbar: boolean }>`

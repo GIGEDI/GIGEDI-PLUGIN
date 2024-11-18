@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { LargeText } from '../styles/typo';
+import { LargeText, SmallDetailText, SmallText } from '../styles/typo';
 import ShootCommentSection from '../sections/ShootCommentSection';
 import ArchiveSection from '../sections/ArchiveSection';
 import BlockSection from '../sections/BlockSection';
@@ -17,6 +17,7 @@ const PluginPage: React.FC = () => {
   const [currentArchiveCount, setCurrentArchiveCount] = useState(0);
   const [selectedArchive, setSelectedArchive] = useState<ArchiveItem | null>(null);
   const isInBlockSection = selectedArchive !== null;
+  const [isRealShootSection, setIsRealShootSection] = useState(false);
 
   const toggleDropdown = (index: number) => {
     setDropdownOpen((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -30,6 +31,14 @@ const PluginPage: React.FC = () => {
 
   const toggleInfoModal = () => {
     setInfoModalOpen((prev) => !prev);
+  };
+
+  const handleGoBack = () => {
+    if (isRealShootSection) {
+      setIsRealShootSection(false);
+    } else {
+      setSelectedArchive(null); 
+    }
   };
 
   return (
@@ -68,10 +77,10 @@ const PluginPage: React.FC = () => {
 
         <InfoIconContainer onClick={toggleInfoModal}>
         <div>
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path fillRule="evenodd" clipRule="evenodd" d="M8 14.5455C4.38505 14.5455 1.45455 11.615 1.45455 8C1.45455 4.38505 4.38505 1.45455 8 1.45455C11.615 1.45455 14.5455 4.38505 14.5455 8C14.5455 11.615 11.615 14.5455 8 14.5455ZM0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8ZM8 11.6364C8.40166 11.6364 8.72727 11.3108 8.72727 10.9091V8C8.72727 7.59834 8.40166 7.27273 8 7.27273C7.59834 7.27273 7.27273 7.59834 7.27273 8V10.9091C7.27273 11.3108 7.59834 11.6364 8 11.6364ZM7.27273 5.09091C7.27273 5.49257 7.59834 5.81818 8 5.81818H8.00727C8.40893 5.81818 8.73455 5.49257 8.73455 5.09091C8.73455 4.68925 8.40893 4.36364 8.00727 4.36364H8C7.59834 4.36364 7.27273 4.68925 7.27273 5.09091Z" fill="#707374"/>
-  </svg>
-</div>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fillRule="evenodd" clipRule="evenodd" d="M8 14.5455C4.38505 14.5455 1.45455 11.615 1.45455 8C1.45455 4.38505 4.38505 1.45455 8 1.45455C11.615 1.45455 14.5455 4.38505 14.5455 8C14.5455 11.615 11.615 14.5455 8 14.5455ZM0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8ZM8 11.6364C8.40166 11.6364 8.72727 11.3108 8.72727 10.9091V8C8.72727 7.59834 8.40166 7.27273 8 7.27273C7.59834 7.27273 7.27273 7.59834 7.27273 8V10.9091C7.27273 11.3108 7.59834 11.6364 8 11.6364ZM7.27273 5.09091C7.27273 5.49257 7.59834 5.81818 8 5.81818H8.00727C8.40893 5.81818 8.73455 5.49257 8.73455 5.09091C8.73455 4.68925 8.40893 4.36364 8.00727 4.36364H8C7.59834 4.36364 7.27273 4.68925 7.27273 5.09091Z" fill="#707374"/>
+          </svg>
+          </div>
 
       </InfoIconContainer>
       </HeaderContainer>
@@ -89,71 +98,99 @@ const PluginPage: React.FC = () => {
       {/* archive or block section */}
       {isExpanded && (
         <>
-        <TitleContainer>
+       <TitleContainer>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          {isInBlockSection && (
+            <div
+            onClick={handleGoBack}
+            style={{
+              position: "relative",
+              top: "-6px",
+              cursor: "pointer",
+            }}
+          >
+            <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+            d="M13.9282 5.22488C14.0533 5.08197 14.2339 5 14.4238 5C14.9896 5 15.2919 5.66636 14.9194 6.09213L9.75 12L14.9194 17.9079C15.2919 18.3336 14.9896 19 14.4238 19C14.2339 19 14.0533 18.918 13.9282 18.7751L8 12L13.9282 5.22488Z"
+            fill="#F6F6F6"
+            />
+            </svg>
+            </div>
+          )}
           <Title_ARCHIVE isSelected={!isInBlockSection}>ARCHIVE</Title_ARCHIVE>
-          <ArchiveIconWrapper>
-        <svg
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" fill="#1D1E1F" />
-          <rect
-            x="0.5"
-            y="0.5"
-            width="31"
-            height="31"
-            rx="3.5"
-            stroke="#303033"
-          />
-          <path
-            d="M7.16602 16C7.16602 20.4178 10.7482 24 15.166 24C17.2905 24 19.326 23.1644 20.8549 21.6889L19.5216 20.3556C18.3927 21.5556 16.8193 22.2222 15.166 22.2222C9.61935 22.2222 6.84602 15.52 10.766 11.6C14.686 7.68 21.3882 10.4622 21.3882 16H18.7216L22.2771 19.5556H22.366L25.8327 16H23.166C23.166 11.5822 19.5838 8 15.166 8C10.7482 8 7.16602 11.5822 7.16602 16Z"
-            fill="url(#paint0_linear_272_1769)"
-          />
-          <defs>
-            <linearGradient
-              id="paint0_linear_272_1769"
-              x1="16.4993"
-              y1="8"
-              x2="16.4993"
-              y2="24"
-              gradientUnits="userSpaceOnUse"
-            >
-              <stop stop-color="#9CFFBF" />
-              <stop offset="1" stop-color="#ADD8FF" />
-            </linearGradient>
-          </defs>
-        </svg>
-      </ArchiveIconWrapper>
           {isInBlockSection && (
             <>
             <Separator>|</Separator>
-            <Title_BLOCK>BLOCK</Title_BLOCK>
+            <Title_BLOCK>{selectedArchive?.text}</Title_BLOCK>
             </>
           )}
-          </TitleContainer>
-          {!selectedArchive ? (
-            <ArchiveSection
-            setArchiveCount={setCurrentArchiveCount}
-            onSelectArchive={(archive) => setSelectedArchive(archive as ArchiveItem)}
-            totalArchiveCount={20}
-            />
-          ) : (
-          <BlockSection
-          archive={selectedArchive}
-          goBack={() => setSelectedArchive(null)}
-          setBlockCount={(count) => {}}
-          />
-          )}
-          </>
-        )}
-        
-        <InfoModal isOpen={isInfoModalOpen} onClose={toggleInfoModal} />
-        </PluginWrapper>    
-        );
-      };
+          </div>
+          {/* 새로고침 버튼 */}
+          <ArchiveIconWrapper>
+            <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" fill="#1D1E1F" />
+              <rect
+              x="0.5"
+              y="0.5"
+              width="31"
+              height="31"
+              rx="3.5"
+              stroke="#303033"
+              />
+              <path
+              d="M7.16602 16C7.16602 20.4178 10.7482 24 15.166 24C17.2905 24 19.326 23.1644 20.8549 21.6889L19.5216 20.3556C18.3927 21.5556 16.8193 22.2222 15.166 22.2222C9.61935 22.2222 6.84602 15.52 10.766 11.6C14.686 7.68 21.3882 10.4622 21.3882 16H18.7216L22.2771 19.5556H22.366L25.8327 16H23.166C23.166 11.5822 19.5838 8 15.166 8C10.7482 8 7.16602 11.5822 7.16602 16Z"
+              fill="url(#paint0_linear_272_1769)"
+              />
+              <defs>
+                <linearGradient
+                id="paint0_linear_272_1769"
+                x1="16.4993"
+                y1="8"
+                x2="16.4993"
+                y2="24"
+                gradientUnits="userSpaceOnUse"
+                >
+                  <stop stopColor="#9CFFBF" />
+                  <stop offset="1" stopColor="#ADD8FF" />
+                  </linearGradient>
+                  </defs>
+                  </svg>
+                  </ArchiveIconWrapper>
+                </TitleContainer>
+                
+                {!selectedArchive ? (
+                  <ArchiveSection
+                  setArchiveCount={setCurrentArchiveCount}
+                  onSelectArchive={(archive) => setSelectedArchive(archive as ArchiveItem)}
+                  totalArchiveCount={20}
+                  />
+                ) : (
+                <BlockSection
+                archive={selectedArchive}
+                goBack={() => setSelectedArchive(null)}
+                setBlockCount={(count) => {}}
+                archiveTitle={selectedArchive.text}
+                />
+                )}
+                </>
+              )}
+              
+              <InfoModal isOpen={isInfoModalOpen} onClose={toggleInfoModal} />
+              </PluginWrapper>    
+              );
+            };
 
 const PluginWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.grey90};
@@ -205,11 +242,11 @@ const TitleContainer = styled.div`
 `;
 
 const Title_ARCHIVE = styled(LargeText)<{ isSelected: boolean }>`
-  color: ${({ theme, isSelected }) => (isSelected ? theme.colors.white : theme.colors.grey70)};
-  margin-bottom: 10px;
+   color: ${({ theme }) => theme.colors.white};
+   margin-bottom: 10px;
 `;
 
-const Title_BLOCK = styled(LargeText)`
+const Title_BLOCK = styled(SmallDetailText)`
   color: ${({ theme }) => theme.colors.white};
   margin-bottom: 10px;
 `;

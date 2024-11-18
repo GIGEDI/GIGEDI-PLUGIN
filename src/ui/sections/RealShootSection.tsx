@@ -30,10 +30,12 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
   };
 
   return (
+    <>
+    <Title>{selectedBlockTitle}</Title>
     <ShootContainerWrapper>
       <ShootContainer>
         <TopBar>
-          <Title>{selectedBlockTitle}</Title>
+          <Title>SHOOT</Title>
           <CloseButtonWrapper onClick={goBack}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12 20C11.8071 20 11.6221 19.9234 11.4857 19.787C11.3494 19.6506 11.2727 19.4656 11.2727 19.2727V17.0909H8.36364C7.97787 17.0909 7.6079 16.9377 7.33512 16.6649C7.06234 16.3921 6.90909 16.0221 6.90909 15.6364V8.36364C6.90909 7.55636 7.56364 6.90909 8.36364 6.90909H18.5455C18.9312 6.90909 19.3012 7.06234 19.574 7.33512C19.8468 7.6079 20 7.97787 20 8.36364V15.6364C20 16.0221 19.8468 16.3921 19.574 16.6649C19.3012 16.9377 18.9312 17.0909 18.5455 17.0909H15.5636L12.8727 19.7891C12.7273 19.9273 12.5455 20 12.3636 20H12ZM12.7273 15.6364V17.8764L14.9673 15.6364H18.5455V8.36364H8.36364V15.6364H12.7273ZM5.45455 14.1818H4V5.45455C4 5.06878 4.15325 4.69881 4.42603 4.42603C4.69881 4.15325 5.06878 4 5.45455 4H17.0909V5.45455H5.45455V14.1818Z" fill="url(#paint0_linear_257_1512)" />
@@ -110,6 +112,7 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
         </ShootContent>
       </ShootContainer>
     </ShootContainerWrapper>
+    </>
   );
 };
 
