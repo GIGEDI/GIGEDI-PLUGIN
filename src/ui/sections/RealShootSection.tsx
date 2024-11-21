@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Shoot } from '../atoms/archiveItemsAtom';
-import { SmallDetailText, SmallText } from '../styles/typo';
+import { SmallDetailText, SmallText, LargeText } from '../styles/typo';
 
 interface RealShootSectionProps {
   shoots: Shoot[];
@@ -31,7 +31,69 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
 
   return (
     <>
-    <Title>{selectedBlockTitle}</Title>
+    <Top>
+         <div
+            style={{
+              position: "relative",
+              top: "-1px",
+              right: "2px",
+              cursor: "pointer",
+            }}
+          >
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M13.9282 5.22488C14.0533 5.08197 14.2339 5 14.4238 5C14.9896 5 15.2919 5.66636 14.9194 6.09213L9.75 12L14.9194 17.9079C15.2919 18.3336 14.9896 19 14.4238 19C14.2339 19 14.0533 18.918 13.9282 18.7751L8 12L13.9282 5.22488Z"
+        fill="#F6F6F6"
+      />
+    </svg>
+  </div>
+  <Block>BLOCK </Block>
+  <Separator>|</Separator>
+  <BlockTitle>{selectedBlockTitle}</BlockTitle>
+
+  <RefreshButton>
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect x="0.5" y="0.5" width="31" height="31" rx="3.5" fill="#1D1E1F" />
+      <rect
+        x="0.5"
+        y="0.5"
+        width="31"
+        height="31"
+        rx="3.5"
+        stroke="#303033"
+      />
+      <path
+        d="M7.16602 16C7.16602 20.4178 10.7482 24 15.166 24C17.2905 24 19.326 23.1644 20.8549 21.6889L19.5216 20.3556C18.3927 21.5556 16.8193 22.2222 15.166 22.2222C9.61935 22.2222 6.84602 15.52 10.766 11.6C14.686 7.68 21.3882 10.4622 21.3882 16H18.7216L22.2771 19.5556H22.366L25.8327 16H23.166C23.166 11.5822 19.5838 8 15.166 8C10.7482 8 7.16602 11.5822 7.16602 16Z"
+        fill="url(#paint0_linear_272_1769)"
+      />
+      <defs>
+        <linearGradient
+          id="paint0_linear_272_1769"
+          x1="16.4993"
+          y1="8"
+          x2="16.4993"
+          y2="24"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="#9CFFBF" />
+          <stop offset="1" stopColor="#ADD8FF" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </RefreshButton>
+</Top>
     <ShootContainerWrapper>
       <ShootContainer>
         <TopBar>
@@ -183,9 +245,10 @@ const ShootContainer = styled.div`
   width: 495px;
   height: auto;
   min-height: 253px;
-  max-height: 340px; // 최대 높이를 제한합니다.
+  max-height: 340px;
   margin: 10px auto;
   padding: 10px;
+  justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.grey80};
 `;
 
@@ -226,7 +289,6 @@ const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 12px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grey75};
 `;
 
@@ -375,5 +437,39 @@ const EmptyText = styled(SmallText)`
   color: ${({ theme }) => theme.colors.grey50};
 `;
 
+const BackButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-right: 16px;
+`;
+
+const RefreshButton = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  margin-left: 16px;
+`;
+
+const Top = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  }
+`;
+
+const Block = styled(LargeText)`
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const BlockTitle = styled(SmallText)`
+  color: ${({ theme }) => theme.colors.white};
+`;
+
+const Separator = styled.span`
+  color: ${({ theme }) => theme.colors.grey70};
+  margin: 0 8px;
+  position: relative;
+`;
 
 export default RealShootSection;
