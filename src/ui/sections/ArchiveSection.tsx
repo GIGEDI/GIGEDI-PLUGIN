@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { archiveItemsAtom } from '../atoms/archiveItemsAtom';
 import styled from 'styled-components';
-import { SmallDetailText, SmallText, MediumText, LargeText } from '../styles/typo';
+import { SmallDetailText, SmallText, MediumText } from '../styles/typo';
 import LimitModal from '../modals/LimitModal';
 import KebabModal from '../modals/KebabModal';
 import DeleteModal from '../modals/DeleteModal';
@@ -22,6 +22,7 @@ interface ArchiveSectionProps {
   setArchiveCount: (count: number) => void;
   onSelectArchive: (archive: ArchiveItem) => void;
   totalArchiveCount: number;
+  
 }
 
 const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount, onSelectArchive, totalArchiveCount}) => {
@@ -187,7 +188,7 @@ const CountContainer = styled.div`
   display: flex;
   align-items: center;
   position: absolute;
-  top: 400px;
+  top: 415px;
   left: 500px;
 `;
 

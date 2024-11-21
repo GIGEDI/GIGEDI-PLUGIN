@@ -6,7 +6,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleLogin = () => {
-    setIsLoggedIn(true); 
+    setIsLoggedIn(false); 
   };
 
   return (
