@@ -6,6 +6,8 @@ import KebabModal from '../modals/KebabModal';
 import DeleteModal from '../modals/DeleteModal';
 import { ArchiveItem, BlockItem } from '../atoms/archiveItemsAtom';
 import RealShootSection from './RealShootSection';
+import { isRealShootSelectedAtom } from '../atoms/SelectedAtom';
+import { useRecoilState } from 'recoil';
 
 interface BlockSectionProps {
   archive: ArchiveItem;
@@ -24,6 +26,7 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [selectedBlock, setSelectedBlock] = useState<BlockItem | null>(null);
+  const [isRealShootSelected, setisRealShootSelected] = useRecoilState(isRealShootSelectedAtom); // New state to manage block selection
   const totalBlockCount = 20;
 
   useEffect(() => {
@@ -87,6 +90,8 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
   };
 
   const handleBlockSelect = (block: BlockItem) => {
+    setisRealShootSelected(true);  // Set the block selected to true
+
     if (kebabMenuOpenIndex === null) { 
       setSelectedBlock(block);
     }
@@ -157,11 +162,15 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
           </BlockWrapper>
           </>
         ) : (
+          // false-> true로 바꾸는 상태변수를 넣고싶어
           <RealShootSection 
              shoots={selectedBlock.shoots}  
              selectedBlockTitle={selectedBlock.text} 
-             goBack={() => setSelectedBlock(null)}
+             goBack={() => {
+              setisRealShootSelected(false);
+              setSelectedBlock(null);}}
            />
+
         )}
     </>
   );

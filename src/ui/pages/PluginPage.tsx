@@ -6,7 +6,10 @@ import ShootCommentSection from '../sections/ShootCommentSection';
 import ArchiveSection from '../sections/ArchiveSection';
 import BlockSection from '../sections/BlockSection';
 import InfoModal from '../modals/InfoModal';
-import { archiveItemsAtom, ArchiveItem } from '../atoms/archiveItemsAtom';
+import { archiveItemsAtom, ArchiveItem, BlockItem } from '../atoms/archiveItemsAtom';
+import RealShootSection from '../sections/RealShootSection';
+import { isRealShootSelectedAtom } from '../atoms/SelectedAtom';
+
 
 const PluginPage: React.FC = () => {
   const [archiveItems, setArchiveItems] = useRecoilState(archiveItemsAtom);
@@ -18,6 +21,9 @@ const PluginPage: React.FC = () => {
   const [selectedArchive, setSelectedArchive] = useState<ArchiveItem | null>(null);
   const isInBlockSection = selectedArchive !== null;
   const [isRealShootSection, setIsRealShootSection] = useState(false);
+  const [selectedBlock, setSelectedBlock] = useState<BlockItem | null>(null);
+  const [isRealShootSelected, setisRealShootSelected] = useRecoilState(isRealShootSelectedAtom);
+
 
   const toggleDropdown = (index: number) => {
     setDropdownOpen((prev) => ({ ...prev, [index]: !prev[index] }));
@@ -80,7 +86,7 @@ const PluginPage: React.FC = () => {
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path fillRule="evenodd" clipRule="evenodd" d="M8 14.5455C4.38505 14.5455 1.45455 11.615 1.45455 8C1.45455 4.38505 4.38505 1.45455 8 1.45455C11.615 1.45455 14.5455 4.38505 14.5455 8C14.5455 11.615 11.615 14.5455 8 14.5455ZM0 8C0 12.4183 3.58172 16 8 16C12.4183 16 16 12.4183 16 8C16 3.58172 12.4183 0 8 0C3.58172 0 0 3.58172 0 8ZM8 11.6364C8.40166 11.6364 8.72727 11.3108 8.72727 10.9091V8C8.72727 7.59834 8.40166 7.27273 8 7.27273C7.59834 7.27273 7.27273 7.59834 7.27273 8V10.9091C7.27273 11.3108 7.59834 11.6364 8 11.6364ZM7.27273 5.09091C7.27273 5.49257 7.59834 5.81818 8 5.81818H8.00727C8.40893 5.81818 8.73455 5.49257 8.73455 5.09091C8.73455 4.68925 8.40893 4.36364 8.00727 4.36364H8C7.59834 4.36364 7.27273 4.68925 7.27273 5.09091Z" fill="#707374"/>
           </svg>
-          </div>
+        </div>
 
       </InfoIconContainer>
       </HeaderContainer>
@@ -100,7 +106,7 @@ const PluginPage: React.FC = () => {
         <>
        <TitleContainer>
         <div style={{ display: "flex", alignItems: "center" }}>
-          {isInBlockSection && (
+          {isInBlockSection || isRealShootSelected  && (
             <div
             onClick={handleGoBack}
             style={{
@@ -123,16 +129,17 @@ const PluginPage: React.FC = () => {
             </svg>
             </div>
           )}
-          <Title_ARCHIVE isSelected={!isInBlockSection}>ARCHIVE</Title_ARCHIVE>
+          <Title_ARCHIVE isSelected={!!isRealShootSelected}>ARCHIVE</Title_ARCHIVE>
           {isInBlockSection && (
             <>
-            <Separator>|</Separator>
-            <Title_BLOCK>{selectedArchive?.text}</Title_BLOCK>
+            <Separator isSelected={!!isRealShootSelected} >|</Separator>
+            <Title_BLOCK isSelected={!!isRealShootSelected} > {selectedArchive?.text}</Title_BLOCK>
             </>
           )}
           </div>
           {/* 새로고침 버튼 */}
-          <ArchiveIconWrapper>
+          { !isRealShootSelected && (
+            <ArchiveIconWrapper>
             <svg
             width="32"
             height="32"
@@ -168,6 +175,8 @@ const PluginPage: React.FC = () => {
                   </defs>
                   </svg>
                   </ArchiveIconWrapper>
+          )}
+          
                 </TitleContainer>
                 
                 {!selectedArchive ? (
@@ -242,17 +251,17 @@ const TitleContainer = styled.div`
 `;
 
 const Title_ARCHIVE = styled(LargeText)<{ isSelected: boolean }>`
-   color: ${({ theme }) => theme.colors.white};
+   color: ${({ theme, isSelected }) => isSelected ? '#525658' : theme.colors.white};
    margin-bottom: 10px;
 `;
 
-const Title_BLOCK = styled(SmallDetailText)`
-  color: ${({ theme }) => theme.colors.white};
-  margin-bottom: 10px;
+
+const Title_BLOCK = styled(SmallDetailText)<{ isSelected: boolean }>`
+   color: ${({ theme, isSelected }) => isSelected ? '#525658' : theme.colors.white};  margin-bottom: 10px;
 `;
 
-const Separator = styled.span`
-  color: ${({ theme }) => theme.colors.grey70};
+const Separator = styled.span<{ isSelected: boolean }>`
+  color: ${({ theme, isSelected }) => isSelected ? '#525658' : theme.colors.grey70};
   margin: 0 8px;
   position: relative;
   top: -5px;
