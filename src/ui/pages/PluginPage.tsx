@@ -40,6 +40,7 @@ const PluginPage: React.FC = () => {
   };
 
   const handleGoBack = () => {
+    setisRealShootSelected(false);
     if (isRealShootSection) {
       setIsRealShootSection(false);
     } else {
@@ -106,7 +107,7 @@ const PluginPage: React.FC = () => {
         <>
        <TitleContainer>
         <div style={{ display: "flex", alignItems: "center" }}>
-          {isInBlockSection || isRealShootSelected  && (
+          {isInBlockSection  && (
             <div
             onClick={handleGoBack}
             style={{
