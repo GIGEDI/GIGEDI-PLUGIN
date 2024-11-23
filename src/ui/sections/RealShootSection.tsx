@@ -11,7 +11,7 @@ interface RealShootSectionProps {
 
 const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlockTitle, goBack }) => {
   const [shootStatuses, setShootStatuses] = useState(
-    shoots.map(() => 'yet' as 'yet' | 'doing' | 'done')
+    shoots.map(() => 'null' as 'yet' | 'doing' | 'done')
   );
   
   const [inputText, setInputText] = useState('');
@@ -23,7 +23,6 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
     index: number,
     newStatus: 'yet' | 'doing' | 'done'
   ) => {
-    // 선택되지 않은 상태라면 새 상태로 업데이트
     if (shootStatuses[index] === null) {
       const updatedStatuses = [...shootStatuses];
       updatedStatuses[index] = newStatus;
@@ -35,22 +34,19 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
       return;
     }
   
-    // 현재 상태가 이미 클릭된 상태와 같다면 아무 작업도 하지 않음
     if (shootStatuses[index] === newStatus) return;
   
-    // 이전 상태에서 한 번만 -1 하고 새 상태로 업데이트
     const updatedStatuses = [...shootStatuses];
     updatedStatuses[index] = newStatus;
     setShootStatuses(updatedStatuses);
   
     const updatedCounts = [...statusCounts];
     
-    // 이전 상태에서만 한 번 -1, 단 카운트가 0 이상일 경우에만
     if (shootStatuses[index] !== null && updatedCounts[index][shootStatuses[index]] > 0) {
       updatedCounts[index][shootStatuses[index]] -= 1;
     }
     
-    updatedCounts[index][newStatus] += 1; // 새 상태 증가
+    updatedCounts[index][newStatus] += 1;
     setStatusCounts(updatedCounts);
   };
   
