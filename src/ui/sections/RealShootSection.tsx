@@ -23,43 +23,36 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
     index: number,
     newStatus: 'yet' | 'doing' | 'done'
   ) => {
-    if (shootStatuses[index] === newStatus) {
+    const currentStatus = shootStatuses[index];
+    const updatedStatuses = [...shootStatuses];
+    const updatedCounts = [...statusCounts];
+    
+    if (currentStatus === newStatus) {
       const updatedStatuses = [...shootStatuses];
-      updatedStatuses[index] = null;
-      setShootStatuses(updatedStatuses);
-  
       const updatedCounts = [...statusCounts];
-      updatedCounts[index][newStatus] -= 1;
+      
+      updatedStatuses[index] = null;
+      updatedCounts[index][currentStatus] -= 1;
+  
+      setShootStatuses(updatedStatuses);
       setStatusCounts(updatedCounts);
       return;
     }
-
-    if (shootStatuses[index] === null) {
-    const updatedStatuses = [...shootStatuses];
-    updatedStatuses[index] = newStatus;
-    setShootStatuses(updatedStatuses);
-
-    const updatedCounts = [...statusCounts];
-    updatedCounts[index][newStatus] += 1;
-    setStatusCounts(updatedCounts);
-    return;
-  }
-  
-    if (shootStatuses[index] === newStatus) return;
-  
-    const updatedStatuses = [...shootStatuses];
-    updatedStatuses[index] = newStatus;
-    setShootStatuses(updatedStatuses);
-  
-    const updatedCounts = [...statusCounts];
     
-    if (shootStatuses[index] !== null && updatedCounts[index][shootStatuses[index]] > 0) {
-      updatedCounts[index][shootStatuses[index]] -= 1;
+    if (currentStatus !== null) {
+      updatedCounts[index][currentStatus] -= 1;
     }
-    
-    updatedCounts[index][newStatus] += 1;
+  
+    updatedStatuses[index] = currentStatus === newStatus ? null : newStatus;
+  
+    if (updatedStatuses[index] !== null) {
+      updatedCounts[index][updatedStatuses[index]] += 1;
+    }
+  
+    setShootStatuses(updatedStatuses);
     setStatusCounts(updatedCounts);
   };
+  
   
   return (
     <>
