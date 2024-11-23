@@ -24,13 +24,12 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
     newStatus: 'yet' | 'doing' | 'done'
   ) => {
     if (shootStatuses[index] === newStatus) {
-      // 이미 클릭된 상태라면, 취소 처리 (null로 리셋)
       const updatedStatuses = [...shootStatuses];
-      updatedStatuses[index] = null; // 취소
+      updatedStatuses[index] = null;
       setShootStatuses(updatedStatuses);
   
       const updatedCounts = [...statusCounts];
-      updatedCounts[index][newStatus] -= 1; // 취소되었으므로 -1
+      updatedCounts[index][newStatus] -= 1;
       setStatusCounts(updatedCounts);
       return;
     }
@@ -61,10 +60,6 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
     updatedCounts[index][newStatus] += 1;
     setStatusCounts(updatedCounts);
   };
-  
-  
-  
-
   
   return (
     <>
