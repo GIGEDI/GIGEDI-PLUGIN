@@ -107,7 +107,7 @@ const PluginPage: React.FC = () => {
         <>
        <TitleContainer>
         <div style={{ display: "flex", alignItems: "center" }}>
-          {isInBlockSection  && (
+          {isInBlockSection && (
             <div
             onClick={handleGoBack}
             style={{
@@ -116,18 +116,21 @@ const PluginPage: React.FC = () => {
               cursor: "pointer",
             }}
           >
-            <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-            d="M13.9282 5.22488C14.0533 5.08197 14.2339 5 14.4238 5C14.9896 5 15.2919 5.66636 14.9194 6.09213L9.75 12L14.9194 17.9079C15.2919 18.3336 14.9896 19 14.4238 19C14.2339 19 14.0533 18.918 13.9282 18.7751L8 12L13.9282 5.22488Z"
-            fill="#F6F6F6"
-            />
-            </svg>
+            {!isRealShootSelected && (
+              <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+              d="M13.9282 5.22488C14.0533 5.08197 14.2339 5 14.4238 5C14.9896 5 15.2919 5.66636 14.9194 6.09213L9.75 12L14.9194 17.9079C15.2919 18.3336 14.9896 19 14.4238 19C14.2339 19 14.0533 18.918 13.9282 18.7751L8 12L13.9282 5.22488Z"
+              fill="#F6F6F6"
+              />
+              </svg>
+            )}
+            
             </div>
           )}
           <Title_ARCHIVE isSelected={!!isRealShootSelected}>ARCHIVE</Title_ARCHIVE>
