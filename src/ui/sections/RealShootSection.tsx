@@ -42,7 +42,7 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
         return `${value} ${label} ago`;
       }
     }
-    return 'just now'; // 0초일 경우
+    return 'just now';
   };
   
   const handleButtonClick = () => {
@@ -74,7 +74,7 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
     }
   
     if (currentStatus === newStatus) {
-      updatedStatuses[index] = 'null'; // 상태를 초기화하거나 'null'로 설정
+      updatedStatuses[index] = 'null';
     } else {
       updatedStatuses[index] = newStatus;
       updatedCounts[index][newStatus] += 1;
