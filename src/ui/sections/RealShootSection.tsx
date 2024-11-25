@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { Shoot } from '../atoms/archiveItemsAtom';
@@ -16,84 +16,67 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
   selectedBlockTitle,
   goBack,
 }) => {
-  // const [shootStatuses, setShootStatuses] = useState(
-  //   shoots.map(() => 'null' as 'yet' | 'doing' | 'done'),
-  // );
+
   const [shootStatuses, setShootStatuses] = useState(
     shoots.map(() => 'null' as 'null' | 'yet' | 'doing' | 'done'),
   );
-
+  
   const [inputText, setInputText] = useState('');
   const [statusCounts, setStatusCounts] = useState(
     shoots.map(() => ({ yet: 0, doing: 0, done: 0 })),
   );
   const user = useRecoilValue(userAtom);
-
+  
   const formatTimestamp = (timestamp: string): string => {
     const now = Date.now();
     const commentTime = new Date(timestamp).getTime();
     const diffInSeconds = Math.floor((now - commentTime) / 1000);
-  
     const units = [
       { label: 'hours', seconds: 3600 },
       { label: 'minutes', seconds: 60 },
       { label: 'seconds', seconds: 1 },
     ];
-  
     for (const { label, seconds } of units) {
       const value = Math.floor(diffInSeconds / seconds);
       if (value > 0) {
         return `${value} ${label} ago`;
       }
     }
-  
     return 'just now'; // 0초일 경우
   };
   
   const handleButtonClick = () => {
-    if (inputText.trim() !== '') {
-      const newComment = {
-        username: user.username,
-        imgUrl: user.imgUrl,
-        content: inputText,
-        timestamp: formatTimestamp(new Date().toISOString()),  // ISO 형식으로 저장
-      };
-      
-      console.log('newComment', newComment);
-      
-      shoots.push(newComment);
-      
-      // 상태 업데이트
-      setShootStatuses((prev) => [...prev, 'null']); // 새로운 댓글의 초기 상태를 'null'로 설정
-      setStatusCounts((prev) => [...prev, { yet: 0, doing: 0, done: 0 }]); // 새로운 댓글의 상태 카운트를 추가
-      
-      console.log('shoots', shoots);
+    if (inputText.trim() === '') return;
   
-      setInputText(''); // 입력란 초기화
-      console.log('setInputText', setInputText);
-    }
+    const newComment = {
+      username: user.username,
+      imgUrl: user.imgUrl,
+      content: inputText,
+      timestamp: formatTimestamp(new Date().toISOString()),
+    };
+  
+    shoots.push(newComment);
+    setShootStatuses((prev) => [...prev, 'null']);
+    setStatusCounts((prev) => [...prev, { yet: 0, doing: 0, done: 0 }]);
+    setInputText('');
   };
+  
 
-  const handleIconClick = (
-    index: number,
-    newStatus: 'yet' | 'doing' | 'done',
-  ) => {
-    if (!statusCounts[index]) {
-      console.error(`Invalid index: ${index}`);
-      return;
-    }
+  const handleIconClick = (index: number, newStatus: 'yet' | 'doing' | 'done') => {
+    if (!statusCounts[index]) return console.error(`Invalid index: ${index}`);
   
     const currentStatus = shootStatuses[index];
     const updatedStatuses = [...shootStatuses];
     const updatedCounts = [...statusCounts];
   
-    if (currentStatus !== null) {
+    if (currentStatus) {
       updatedCounts[index][currentStatus] -= 1;
     }
   
-    updatedStatuses[index] = newStatus;
-  
-    if (newStatus !== null) {
+    if (currentStatus === newStatus) {
+      updatedStatuses[index] = 'null'; // 상태를 초기화하거나 'null'로 설정
+    } else {
+      updatedStatuses[index] = newStatus;
       updatedCounts[index][newStatus] += 1;
     }
   
@@ -101,10 +84,7 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
     setStatusCounts(updatedCounts);
   };
   
-  // useEffect(() => {
-  //   setShootStatuses(shoots.map(() => 'null'));
-  //   setStatusCounts(shoots.map(() => ({ yet: 0, doing: 0, done: 0 })));
-  // }, [shoots]);
+  
   
   return (
     <>
