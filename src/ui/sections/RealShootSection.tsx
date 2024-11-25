@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useRecoilValue } from 'recoil';
 import { Shoot } from '../atoms/archiveItemsAtom';
 import { SmallDetailText, SmallText, LargeText } from '../styles/typo';
+import { userAtom } from '../atoms/userAtom';
 
 interface RealShootSectionProps {
   shoots: Shoot[];
@@ -9,62 +11,112 @@ interface RealShootSectionProps {
   goBack: () => void;
 }
 
-const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlockTitle, goBack }) => {
+const RealShootSection: React.FC<RealShootSectionProps> = ({
+  shoots,
+  selectedBlockTitle,
+  goBack,
+}) => {
+  // const [shootStatuses, setShootStatuses] = useState(
+  //   shoots.map(() => 'null' as 'yet' | 'doing' | 'done'),
+  // );
   const [shootStatuses, setShootStatuses] = useState(
-    shoots.map(() => 'null' as 'yet' | 'doing' | 'done')
+    shoots.map(() => 'null' as 'null' | 'yet' | 'doing' | 'done'),
   );
-  
+
   const [inputText, setInputText] = useState('');
   const [statusCounts, setStatusCounts] = useState(
-    shoots.map(() => ({ yet: 0, doing: 0, done: 0 }))
+    shoots.map(() => ({ yet: 0, doing: 0, done: 0 })),
   );
+  const user = useRecoilValue(userAtom);
+
+  const formatTimestamp = (timestamp: string): string => {
+    const now = Date.now();
+    const commentTime = new Date(timestamp).getTime();
+    const diffInSeconds = Math.floor((now - commentTime) / 1000);
+  
+    const units = [
+      { label: 'hours', seconds: 3600 },
+      { label: 'minutes', seconds: 60 },
+      { label: 'seconds', seconds: 1 },
+    ];
+  
+    for (const { label, seconds } of units) {
+      const value = Math.floor(diffInSeconds / seconds);
+      if (value > 0) {
+        return `${value} ${label} ago`;
+      }
+    }
+  
+    return 'just now'; // 0초일 경우
+  };
+  
+  const handleButtonClick = () => {
+    if (inputText.trim() !== '') {
+      const newComment = {
+        username: user.username,
+        imgUrl: user.imgUrl,
+        content: inputText,
+        timestamp: formatTimestamp(new Date().toISOString()),  // ISO 형식으로 저장
+      };
+      
+      console.log('newComment', newComment);
+      
+      shoots.push(newComment);
+      
+      // 상태 업데이트
+      setShootStatuses((prev) => [...prev, 'null']); // 새로운 댓글의 초기 상태를 'null'로 설정
+      setStatusCounts((prev) => [...prev, { yet: 0, doing: 0, done: 0 }]); // 새로운 댓글의 상태 카운트를 추가
+      
+      console.log('shoots', shoots);
+  
+      setInputText(''); // 입력란 초기화
+      console.log('setInputText', setInputText);
+    }
+  };
 
   const handleIconClick = (
     index: number,
-    newStatus: 'yet' | 'doing' | 'done'
+    newStatus: 'yet' | 'doing' | 'done',
   ) => {
+    if (!statusCounts[index]) {
+      console.error(`Invalid index: ${index}`);
+      return;
+    }
+  
     const currentStatus = shootStatuses[index];
     const updatedStatuses = [...shootStatuses];
     const updatedCounts = [...statusCounts];
-    
-    if (currentStatus === newStatus) {
-      const updatedStatuses = [...shootStatuses];
-      const updatedCounts = [...statusCounts];
-      
-      updatedStatuses[index] = null;
-      updatedCounts[index][currentStatus] -= 1;
   
-      setShootStatuses(updatedStatuses);
-      setStatusCounts(updatedCounts);
-      return;
-    }
-    
     if (currentStatus !== null) {
       updatedCounts[index][currentStatus] -= 1;
     }
   
-    updatedStatuses[index] = currentStatus === newStatus ? null : newStatus;
+    updatedStatuses[index] = newStatus;
   
-    if (updatedStatuses[index] !== null) {
-      updatedCounts[index][updatedStatuses[index]] += 1;
+    if (newStatus !== null) {
+      updatedCounts[index][newStatus] += 1;
     }
   
     setShootStatuses(updatedStatuses);
     setStatusCounts(updatedCounts);
   };
   
+  // useEffect(() => {
+  //   setShootStatuses(shoots.map(() => 'null'));
+  //   setStatusCounts(shoots.map(() => ({ yet: 0, doing: 0, done: 0 })));
+  // }, [shoots]);
   
   return (
     <>
     <Top>
-         <div
-            style={{
-              position: "relative",
-              top: "-1px",
-              right: "2px",
-              cursor: "pointer",
-            }}
-          >
+      <div
+        style={{
+          position: "relative",
+          top: "-1px",
+          right: "2px",
+          cursor: "pointer",
+        }}
+      >
     <svg
       width="24"
       height="24"
@@ -189,7 +241,7 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({ shoots, selectedBlo
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
-          <SendButton>
+          <SendButton onClick={handleButtonClick} >
           <svg width="54" height="32" viewBox="0 0 54 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="54" height="32" rx="16" fill="#303033"/>
             <path d="M18.9998 8L33.8826 21.9565C33.8826 21.9565 34.1737 22.3535 33.8032 22.7417C33.4415 23.1299 32.9651 22.7946 32.9651 22.7946L18.9998 8ZM23.4196 9.40271L34.9765 20.0333C34.9765 20.0333 35.2588 20.4215 34.8971 20.792C34.5266 21.2066 34.0502 20.8714 34.0502 20.8714L23.4196 9.40271ZM20.3142 12.411L31.8712 23.024C31.8712 23.024 32.1535 23.4122 31.7918 23.8003C31.4212 24.1973 30.9448 23.8797 30.9448 23.8797L20.3142 12.411ZM27.1602 10.6113L35.2324 18.0307C35.2324 18.0307 35.4265 18.3042 35.1706 18.5865C34.9236 18.8511 34.5884 18.613 34.5884 18.613L27.1602 10.6113ZM21.3376 15.8605L29.4098 23.2886C29.4098 23.2886 29.6039 23.5621 29.3569 23.8356C29.101 24.1091 28.7658 23.8797 28.7658 23.8797L21.3376 15.8605ZM30.9801 12.3405L34.6589 15.7105C34.6589 15.7105 34.756 15.834 34.6148 15.9663C34.509 16.0898 34.3413 15.984 34.3413 15.984L30.9801 12.3405ZM23.1991 19.5569L26.8867 22.9181C26.8867 22.9181 26.9837 23.0505 26.8514 23.174C26.7279 23.3063 26.5603 23.1916 26.5603 23.1916L23.1991 19.5569Z" fill="white"/>
