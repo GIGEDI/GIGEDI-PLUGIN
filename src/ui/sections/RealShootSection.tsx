@@ -96,6 +96,7 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
           right: "2px",
           cursor: "pointer",
         }}
+        onClick={goBack}
       >
     <svg
       width="24"
