@@ -6,7 +6,7 @@ import KebabModal from '../modals/KebabModal';
 import DeleteModal from '../modals/DeleteModal';
 import { ArchiveItem, BlockItem } from '../atoms/archiveItemsAtom';
 import RealShootSection from './RealShootSection';
-import { isRealShootSelectedAtom } from '../atoms/SelectedAtom';
+import { isRealShootSelectedAtom } from '../atoms/selectedAtom';
 import { useRecoilState } from 'recoil';
 
 interface BlockSectionProps {
