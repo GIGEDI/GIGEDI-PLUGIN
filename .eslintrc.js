@@ -30,6 +30,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    'react/function-component-definition': 'off',
     'react/prop-types': 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
@@ -37,6 +38,13 @@ module.exports = {
       1,
       { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
     ],
+    'react/function-component-definition': [
+  'error',
+  {
+    namedComponents: 'arrow-function', // Or 'function-declaration' for stricter enforcement
+    unnamedComponents: 'arrow-function',
+  },
+],
     'no-restricted-globals': 'off',
     'react/jsx-props-no-spreading': 'off',
     'no-param-reassign': [
