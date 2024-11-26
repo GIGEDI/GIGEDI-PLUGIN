@@ -8,7 +8,7 @@ import BlockSection from '../sections/BlockSection';
 import InfoModal from '../modals/InfoModal';
 import { archiveItemsAtom, ArchiveItem, BlockItem } from '../atoms/archiveItemsAtom';
 import RealShootSection from '../sections/RealShootSection';
-import { isRealShootSelectedAtom } from '../atoms/SelectedAtom';
+import { isRealShootSelectedAtom } from '../atoms/selectedAtom';
 
 
 const PluginPage: React.FC = () => {
