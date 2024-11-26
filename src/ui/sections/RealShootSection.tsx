@@ -287,7 +287,7 @@ const icons = {
 
 const ShootContainerWrapper = styled.div`
   width: 520px;
-  height: 350px;
+  height: 368px;
   max-height: 1200px;
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.colors.grey80};
@@ -305,7 +305,7 @@ const ShootContainer = styled.div`
   min-height: 253px;
   max-height: 340px;
   margin: 10px auto;
-  padding: 10px;
+  padding: 15px; 
   justify-content: space-between;
   background-color: ${({ theme }) => theme.colors.grey80};
 `;
@@ -512,7 +512,6 @@ const RefreshButton = styled.div`
 const Top = styled.div`
   display: flex;
   align-items: center;
-  padding-bottom: 10px;
   }
 `;
 

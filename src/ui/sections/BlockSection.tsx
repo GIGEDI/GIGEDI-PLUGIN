@@ -178,7 +178,7 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
 
 const BlockWrapper = styled.div`
   width: 520px;
-  height: 321px;
+  height: 368px;
   border-radius: 8px;
   border: 1px solid ${({ theme }) => theme.colors.grey80};
   display: flex;

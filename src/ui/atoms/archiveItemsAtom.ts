@@ -7,10 +7,13 @@ export interface Shoot {
   timestamp: string;
 }
 
+// 블록 생성 -> 좌표 
 export interface BlockItem {
   text: string;
   count: number;
   shoots: Shoot[];
+  coordinates?: { x: number; y: number; width: number; height: number };
+  node?: SceneNode;
 }
 
 export interface ArchiveItem {
