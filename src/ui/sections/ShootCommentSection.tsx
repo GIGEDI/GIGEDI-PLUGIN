@@ -194,7 +194,6 @@ const icons = {
     }
   };
 
-
 const ShootSection = styled.section<{ hasScrollbar: boolean; isExpanded: boolean }>`
   background-color: ${({ theme }) => theme.colors.grey80};
   padding: 15px;

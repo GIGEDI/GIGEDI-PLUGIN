@@ -7,12 +7,10 @@ import ArchiveSection from '../sections/ArchiveSection';
 import BlockSection from '../sections/BlockSection';
 import InfoModal from '../modals/InfoModal';
 import { archiveItemsAtom, ArchiveItem, BlockItem } from '../atoms/archiveItemsAtom';
-import RealShootSection from '../sections/RealShootSection';
 import { isRealShootSelectedAtom } from '../atoms/selectedAtom';
 
 
 const PluginPage: React.FC = () => {
-  const [archiveItems, setArchiveItems] = useRecoilState(archiveItemsAtom);
   const [activeTab, setActiveTab] = useState<'yet' | 'doing' | 'done' | 'mentioned'>('yet');
   const [dropdownOpen, setDropdownOpen] = useState<{ [key: number]: boolean }>({});
   const [isExpanded, setIsExpanded] = useState(true);
@@ -21,9 +19,7 @@ const PluginPage: React.FC = () => {
   const [selectedArchive, setSelectedArchive] = useState<ArchiveItem | null>(null);
   const isInBlockSection = selectedArchive !== null;
   const [isRealShootSection, setIsRealShootSection] = useState(false);
-  const [selectedBlock, setSelectedBlock] = useState<BlockItem | null>(null);
   const [isRealShootSelected, setisRealShootSelected] = useRecoilState(isRealShootSelectedAtom);
-
 
   const toggleDropdown = (index: number) => {
     setDropdownOpen((prev) => ({ ...prev, [index]: !prev[index] }));

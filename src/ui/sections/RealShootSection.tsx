@@ -60,7 +60,6 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
     setStatusCounts((prev) => [...prev, { yet: 0, doing: 0, done: 0 }]);
     setInputText('');
   };
-  
 
   const handleIconClick = (index: number, newStatus: 'yet' | 'doing' | 'done') => {
     if (!statusCounts[index]) return console.error(`Invalid index: ${index}`);
@@ -83,8 +82,15 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
     setShootStatuses(updatedStatuses);
     setStatusCounts(updatedCounts);
   };
+
+  const handleDeleteShoot = (index: number) => {
+    const updatedStatuses = shootStatuses.filter((_, i) => i !== index);
+    const updatedCounts = statusCounts.filter((_, i) => i !== index);
   
-  
+    setShootStatuses(updatedStatuses);
+    setStatusCounts(updatedCounts);
+    shoots.splice(index, 1);
+  };
   
   return (
     <>
@@ -193,6 +199,26 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
                   <HeaderContainer>
                     <Username>{shoot.username}</Username>
                     <Timestamp>{shoot.timestamp}</Timestamp>
+                    <DeleteIconWrapper onClick={() => handleDeleteShoot(index)}>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M16.0406 17.6568L12 13.6162L7.95939 17.6568C7.51492 18.1013 6.78761 18.1013 6.34315 17.6568C5.89868 17.2124 5.89868 16.4851 6.34315 16.0406L10.3838 12L6.34315 7.95938C5.89868 7.51491 5.89868 6.7876 6.34315 6.34313C6.78761 5.89867 7.51492 5.89867 7.95939 6.34313L12 10.3837L16.0406 6.34313C16.4851 5.89867 17.2124 5.89867 17.6569 6.34313C18.1013 6.7876 18.1013 7.51491 17.6569 7.95938L13.6162 12L17.6569 16.0406C18.1013 16.4851 18.1013 17.2124 17.6569 17.6568C17.2124 18.1013 16.4851 18.1013 16.0406 17.6568Z"
+              fill="#3E3F40"
+            />
+          </svg>
+        </DeleteIconWrapper>
+
+
+
+
                   </HeaderContainer>
                   <Content>{shoot.content}</Content>
                   <IconTabs>
@@ -347,16 +373,19 @@ const TopBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 8px 2px;
   border-bottom: 1px solid ${({ theme }) => theme.colors.grey75};
 `;
 
 const Title = styled(SmallText)`
   color: ${({ theme }) => theme.colors.grey40};
+  margin-bottom: 7px;
 `;
 
 const CloseButtonWrapper = styled.div`
   display: flex;
   align-items: center;
+  margin-bottom: 7px;
   cursor: pointer;
 `;
 
@@ -512,7 +541,7 @@ const RefreshButton = styled.div`
 const Top = styled.div`
   display: flex;
   align-items: center;
-  }
+  margin-bottom: 12px;
 `;
 
 const Block = styled(LargeText)`
@@ -528,5 +557,14 @@ const Separator = styled.span`
   margin: 0 8px;
   position: relative;
 `;
+
+const DeleteIconWrapper = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+`;
+
 
 export default RealShootSection;

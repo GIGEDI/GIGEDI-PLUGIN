@@ -26,7 +26,7 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [selectedBlock, setSelectedBlock] = useState<BlockItem | null>(null);
-  const [isRealShootSelected, setisRealShootSelected] = useRecoilState(isRealShootSelectedAtom); // New state to manage block selection
+  const [isRealShootSelected, setisRealShootSelected] = useRecoilState(isRealShootSelectedAtom); 
   const totalBlockCount = 20;
 
   useEffect(() => {
@@ -50,7 +50,16 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
       );
       archive.blocks = updatedBlocks;
     } else {
-      const updatedBlocks = [...archive.blocks, { text: newBlock, count: 0, shoots: [] }];
+      const updatedBlocks = [...archive.blocks, { 
+        text: newBlock, 
+        count: 0, 
+        shoots: [],
+        tasks: {
+          yet: [],
+          doing: [],
+          done: [],
+          mentioned: [],
+        }, }];
       archive.blocks = updatedBlocks;
     }
 
@@ -100,7 +109,6 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
   return (
     <>
     <Header>
-     {/*<Title>{archive.text}</Title>*/}
      <CountContainer>
         <CountText>{archive.blocks.length}</CountText> 
         <SeparatorText>/</SeparatorText>
@@ -162,7 +170,6 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
           </BlockWrapper>
           </>
         ) : (
-          // false-> true로 바꾸는 상태변수를 넣고싶어
           <RealShootSection 
              shoots={selectedBlock.shoots}  
              selectedBlockTitle={selectedBlock.text} 
