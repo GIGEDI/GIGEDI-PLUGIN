@@ -50,7 +50,7 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
       );
       archive.blocks = updatedBlocks;
     } else {
-      const updatedBlocks = [...archive.blocks, { 
+      const updatedBlocks = [{ 
         text: newBlock, 
         count: 0, 
         shoots: [],
@@ -59,7 +59,9 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
           doing: [],
           done: [],
           mentioned: [],
-        }, }];
+        },
+       },
+       ...archive.blocks,];
       archive.blocks = updatedBlocks;
     }
 
@@ -136,7 +138,6 @@ const BlockSection: React.FC<BlockSectionProps> = ({ archive, goBack, setBlockCo
                 <BlockItem key={index} onClick={() => handleBlockSelect(block)}>
                   <BlockText>
                     {block.text}
-                    {/* 추후 읽음 여부에 따라 svg 코드 조건 추가*/}
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd" clip-rule="evenodd" d="M11.4857 19.787C11.6221 19.9234 11.8071 20 12 20H12.3636C12.5455 20 12.7273 19.9273 12.8727 19.7891L15.5636 17.0909H18.5455C18.9312 17.0909 19.3012 16.9377 19.574 16.6649C19.8468 16.3921 20 16.0221 20 15.6364V12H19.2C18.9757 12 18.7567 11.9769 18.5455 11.933V15.6364H14.9673L12.7273 17.8764V15.6364H8.36364V8.36364H16V8C16 7.62181 16.0525 7.25588 16.1506 6.90909H8.36364C7.56364 6.90909 6.90909 7.55636 6.90909 8.36364V15.6364C6.90909 16.0221 7.06234 16.3921 7.33512 16.6649C7.6079 16.9377 7.97787 17.0909 8.36364 17.0909H11.2727V19.2727C11.2727 19.4656 11.3494 19.6506 11.4857 19.787ZM16.9143 5.45455H5.45455V14.1818H4V5.45455C4 5.06878 4.15325 4.69881 4.42603 4.42603C4.69881 4.15325 5.06878 4 5.45455 4H17.0909V5.25459C17.0299 5.31924 16.971 5.38593 16.9143 5.45455Z" fill="#D7D7D9"/>
                     <rect x="17" y="5" width="6" height="6" rx="3" fill="#21F5BE"/>

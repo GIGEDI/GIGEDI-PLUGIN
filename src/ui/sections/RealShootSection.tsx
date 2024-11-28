@@ -49,8 +49,8 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
     if (inputText.trim() === '') return;
   
     const newComment = {
-      username: user.username,
-      imgUrl: user.imgUrl,
+      username: "GIGEDI",
+      imgUrl: "https://github.com/user-attachments/assets/50fca631-c35d-48da-8b4a-3f29f55783de",
       content: inputText,
       timestamp: formatTimestamp(new Date().toISOString()),
     };
