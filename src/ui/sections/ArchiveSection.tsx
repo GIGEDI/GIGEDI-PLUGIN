@@ -35,7 +35,6 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount, onSele
   const [selectedIndexForDelete, setSelectedIndexForDelete] = useState<number | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
-  const [selectedArchive, setSelectedArchive] = useState<ArchiveItem | null>(null);
   const handleArchiveClick = (archive: ArchiveItem) => {
     if (kebabMenuOpenIndex === null) {
       onSelectArchive(archive);
