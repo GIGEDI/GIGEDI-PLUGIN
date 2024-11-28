@@ -63,7 +63,7 @@ const ArchiveSection: React.FC<ArchiveSectionProps> = ({ setArchiveCount, onSele
         );
         return updatedItems;
       } else {
-        return [...prevItems, { text: newArchive, count: 0, blocks: [] }];
+        return [{ text: newArchive, count: 0, blocks: [] }, ...prevItems];
       }
     });
   
