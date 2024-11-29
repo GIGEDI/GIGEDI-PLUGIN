@@ -92,13 +92,13 @@ const ShootCommentSection: React.FC<ShootCommentSectionProps> = ({
               </TaskHeader>
               <TaskText>
                 {task.text.split(' ').map((word, index) =>
-                  word.startsWith('@') ? (
-                    <HighlightText key={index}>{word}</HighlightText>
-                  ) : (
-                    `${word} `
-                  )
-                )}
-              </TaskText>
+                word.startsWith('@') ? (
+                <HighlightText key={index}>{word}</HighlightText>
+              ) : (
+              <span key={index}>{word} </span>
+            )
+            )}
+            </TaskText>
             </TaskContent>
             <StatusButton isOpen={dropdownOpen[index]} onClick={() => toggleDropdown(index)}>
               <IconContainer>
