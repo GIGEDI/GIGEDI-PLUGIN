@@ -49,8 +49,8 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
     if (inputText.trim() === '') return;
   
     const newComment = {
-      username: "GIGEDI",
-      imgUrl: "https://github.com/user-attachments/assets/50fca631-c35d-48da-8b4a-3f29f55783de",
+      username: "yesme",
+      imgUrl: "https://github.com/user-attachments/assets/fa0cc5df-ba97-408b-8529-654f5112208a",
       content: inputText,
       timestamp: formatTimestamp(new Date().toISOString()),
     };
@@ -220,7 +220,7 @@ const RealShootSection: React.FC<RealShootSectionProps> = ({
 
 
                   </HeaderContainer>
-                  <Content>{shoot.content}</Content>
+                  <Content>{formatTextWithHighlight(shoot.content)}</Content>
                   <IconTabs>
                     {(['yet', 'doing', 'done'] as const).map((status) => (
                       <IconTab
@@ -470,7 +470,21 @@ const Timestamp = styled(SmallDetailText)`
 const Content = styled(SmallText)`
   color: ${({ theme }) => theme.colors.white};
   margin: 4px 0;
+  span {
+    color: ${({ theme }) => theme.colors.tint30};
+    font-weight: bold;
+  }
 `;
+
+const formatTextWithHighlight = (text: string) => {
+  return text.split(' ').map((word, index) =>
+    word.startsWith('@') ? (
+      <span key={index}>{word} </span>
+    ) : (
+      <React.Fragment key={index}>{word} </React.Fragment>
+    )
+  );
+};
 
 const StyledInput = styled.input`
   flex: 1;

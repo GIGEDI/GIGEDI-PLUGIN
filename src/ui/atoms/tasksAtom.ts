@@ -17,18 +17,18 @@ interface TasksState {
 export const tasksAtom = atom<TasksState>({
   key: 'tasksAtom',
   default: {
-    yet: [],
+    yet: [
+      { name: 'JuahRyu', text: `와프 검토 완료됐나요?`, page: '241121_기획_와이어프레임 최종(완료)', time: '1 hour ago' },
+    ],
     doing: [
-      { name: 'JIN', text: '플로우 다 확인했나요?', page: '메인페이지 플로우 | ', time: '2 hours ago' },
+      { name: '성이', text: '와이어프레임과 살짝 다른것 같은데요? 수정해주세요!', page: '241124_디자인_UI 디자인 최종(진행중) | ', time: '2 hours ago' },
       { name: 'SUJIN.K', text: '디자인 검토 완료했습니다.', page: '메인페이지 플로우 | ', time: '5 hours ago' },
     ],
     done: [
-      { name: 'CRYSTAL', text: '작업이 모두 완료되었습니다.', page: '메인페이지 플로우 | ', time: '1 day ago' },
-      { name: 'TAEK', text: '코드 리뷰가 끝났습니다.', page: '메인페이지 플로우 | ', time: '3 days ago' },
+      { name: '성이', text: '@yesme @가언 메인홈 최종시안입니다! 확인해보시고 말씀해주세요!', page: '241124_디자인_UI 디자인 최종(진행중)', time: '1 day ago' },
     ],
     mentioned: [
-      { name: 'GAUN', text: '@SUJIN.K 최신 디자인 시스템 확인 부탁드립니다.', page: '메인페이지 플로우 | ', time: '4 hours ago' },
-      { name: 'TAEK', text: '@JIN 변경 사항 공유합니다.', page: '메인페이지 플로우 | ', time: '1 day ago' },
+      { name: 'GAUN', text: '@SUJIN.K 최신 디자인 시스템 확인 부탁드립니다.', page: '241128_디자인_컬리시스템(완료)', time: '4 hours ago' },
     ],
   },
 });
